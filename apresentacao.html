@@ -383,6 +383,54 @@ body::after{content:'';position:fixed;inset:0;opacity:.012;pointer-events:none;z
   </div>
 </section>
 
+<!-- ═══ Galeria: Veja o sistema por dentro ═══ -->
+<section class="gallery-section" id="sistema" style="max-width:1140px;margin:0 auto;padding:80px 24px">
+  <h2 style="text-align:center;font-size:clamp(28px,4vw,42px);font-weight:800;margin-bottom:12px">Veja o sistema <span style="color:var(--gold)">por dentro</span></h2>
+  <p style="text-align:center;color:var(--text-dim);font-size:18px;margin-bottom:48px;max-width:600px;margin-left:auto;margin-right:auto">
+    Cada tela foi pensada para você ter controle total da sua equipe digital — sem complicação.
+  </p>
+  <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(340px,1fr));gap:24px">
+    <div class="gcard" onclick="openLB(this)" style="background:var(--surface);border:1px solid var(--border);border-radius:16px;overflow:hidden;cursor:pointer;transition:transform .3s,border-color .3s,box-shadow .3s">
+      <img src="screen-kanban.png" alt="CRM Kanban" loading="lazy" style="width:100%;height:220px;object-fit:cover;object-position:top;border-bottom:1px solid var(--border)">
+      <div style="padding:20px"><h3 style="font-size:16px;font-weight:700;margin-bottom:6px">📋 CRM Kanban</h3><p style="color:var(--text-dim);font-size:14px;line-height:1.5">Funil visual com score automático. Veja cada lead avançando de "novo" até "fechado" em tempo real.</p></div>
+    </div>
+    <div class="gcard" onclick="openLB(this)" style="background:var(--surface);border:1px solid var(--border);border-radius:16px;overflow:hidden;cursor:pointer;transition:transform .3s,border-color .3s,box-shadow .3s">
+      <img src="screen-supervisor.png" alt="Supervisor" loading="lazy" style="width:100%;height:220px;object-fit:cover;object-position:top;border-bottom:1px solid var(--border)">
+      <div style="padding:20px"><h3 style="font-size:16px;font-weight:700;margin-bottom:6px">💬 Supervisor</h3><p style="color:var(--text-dim);font-size:14px;line-height:1.5">Veja todas as conversas em tempo real. Corrija respostas, assuma o chat ou deixe a IA trabalhar.</p></div>
+    </div>
+    <div class="gcard" onclick="openLB(this)" style="background:var(--surface);border:1px solid var(--border);border-radius:16px;overflow:hidden;cursor:pointer;transition:transform .3s,border-color .3s,box-shadow .3s">
+      <img src="screen-analytics.png" alt="Analytics" loading="lazy" style="width:100%;height:220px;object-fit:cover;object-position:top;border-bottom:1px solid var(--border)">
+      <div style="padding:20px"><h3 style="font-size:16px;font-weight:700;margin-bottom:6px">📊 Analytics</h3><p style="color:var(--text-dim);font-size:14px;line-height:1.5">Funil de vendas automático, leads qualificados, taxa de conversão e custo por lead em tempo real.</p></div>
+    </div>
+    <div class="gcard" onclick="openLB(this)" style="background:var(--surface);border:1px solid var(--border);border-radius:16px;overflow:hidden;cursor:pointer;transition:transform .3s,border-color .3s,box-shadow .3s">
+      <img src="screen-tv-dashboard.png" alt="TV Dashboard" loading="lazy" style="width:100%;height:220px;object-fit:cover;object-position:top;border-bottom:1px solid var(--border)">
+      <div style="padding:20px"><h3 style="font-size:16px;font-weight:700;margin-bottom:6px">📺 TV Dashboard</h3><p style="color:var(--text-dim);font-size:14px;line-height:1.5">Coloque na TV do escritório. Mostra a equipe digital trabalhando, métricas ao vivo e alertas.</p></div>
+    </div>
+    <div class="gcard" onclick="openLB(this)" style="background:var(--surface);border:1px solid var(--border);border-radius:16px;overflow:hidden;cursor:pointer;transition:transform .3s,border-color .3s,box-shadow .3s">
+      <img src="screen-pixel-office.png" alt="Pixel Office" loading="lazy" style="width:100%;height:220px;object-fit:cover;object-position:top;border-bottom:1px solid var(--border)">
+      <div style="padding:20px"><h3 style="font-size:16px;font-weight:700;margin-bottom:6px">🏢 Pixel Office</h3><p style="color:var(--text-dim);font-size:14px;line-height:1.5">Escritório virtual da sua equipe digital. Veja quem está atendendo, em reunião ou ocioso.</p></div>
+    </div>
+    <div class="gcard" onclick="openLB(this)" style="background:var(--surface);border:1px solid var(--border);border-radius:16px;overflow:hidden;cursor:pointer;transition:transform .3s,border-color .3s,box-shadow .3s">
+      <img src="screen-voice-studio.png" alt="Voice Studio" loading="lazy" style="width:100%;height:220px;object-fit:cover;object-position:top;border-bottom:1px solid var(--border)">
+      <div style="padding:20px"><h3 style="font-size:16px;font-weight:700;margin-bottom:6px">🎙️ Voice Studio</h3><p style="color:var(--text-dim);font-size:14px;line-height:1.5">Clone sua voz ou escolha entre vozes brasileiras. A IA responde por áudio no WhatsApp.</p></div>
+    </div>
+    <div class="gcard" onclick="openLB(this)" style="background:var(--surface);border:1px solid var(--border);border-radius:16px;overflow:hidden;cursor:pointer;transition:transform .3s,border-color .3s,box-shadow .3s">
+      <img src="screen-reports.png" alt="Relatórios" loading="lazy" style="width:100%;height:220px;object-fit:cover;object-position:top;border-bottom:1px solid var(--border)">
+      <div style="padding:20px"><h3 style="font-size:16px;font-weight:700;margin-bottom:6px">📋 Relatórios</h3><p style="color:var(--text-dim);font-size:14px;line-height:1.5">Relatórios automáticos de atendimento, performance dos agentes e satisfação do cliente.</p></div>
+    </div>
+  </div>
+</section>
+<div id="lb" onclick="closeLB()" style="display:none;position:fixed;inset:0;z-index:1000;background:rgba(0,0,0,.92);justify-content:center;align-items:center;cursor:zoom-out">
+  <span onclick="closeLB()" style="position:fixed;top:20px;right:24px;color:white;font-size:32px;cursor:pointer;z-index:1001;background:rgba(0,0,0,.5);border-radius:50%;width:44px;height:44px;display:flex;align-items:center;justify-content:center;border:1px solid rgba(255,255,255,.2)">✕</span>
+  <img id="lb-img" src="" alt="" style="max-width:92vw;max-height:90vh;border-radius:12px;box-shadow:0 0 60px rgba(245,158,11,.2)">
+</div>
+<script>
+function openLB(c){var i=c.querySelector('img');document.getElementById('lb-img').src=i.src;var l=document.getElementById('lb');l.style.display='flex';document.body.style.overflow='hidden'}
+function closeLB(){document.getElementById('lb').style.display='none';document.body.style.overflow=''}
+document.addEventListener('keydown',function(e){if(e.key==='Escape')closeLB()});
+</script>
+<style>.gcard:hover{transform:translateY(-4px)!important;border-color:var(--gold)!important;box-shadow:0 8px 32px rgba(245,158,11,.15)!important}</style>
+
 <footer class="footer">© 2026 Aurelius IA · aurelius.ia.br</footer>
 
 </body>

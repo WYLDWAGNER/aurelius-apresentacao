@@ -1,0 +1,706 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Aurelius IA para Aluguel de Imóveis — Atendimento Automático no WhatsApp</title>
+<meta name="description" content="IA para proprietários e administradores de imóveis: atende inquilinos 24h, gerencia manutenção, cobra documentos, reativa fila de espera. Case real com dados.">
+<meta name="keywords" content="IA aluguel imóveis, WhatsApp imobiliária, atendimento automático inquilinos, chatbot aluguel, inteligência artificial proprietário imóveis, gestão de aluguel">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=Playfair+Display:ital,wght@0,700;0,800;0,900;1,700&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+:root {
+  --black: #050508;
+  --black-light: #0a0a10;
+  --surface: #0f0f18;
+  --surface-2: #16161f;
+  --border: #1e1e2a;
+  --border-light: #2a2a3a;
+  --gold: #F59E0B;
+  --gold-dim: #D97706;
+  --gold-glow: rgba(245, 158, 11, 0.15);
+  --gold-glow-strong: rgba(245, 158, 11, 0.3);
+  --text: #F1F5F9;
+  --text-dim: #94A3B8;
+  --text-muted: #64748B;
+  --red: #EF4444;
+  --red-dim: rgba(239, 68, 68, 0.08);
+  --green: #22C55E;
+  --green-dim: rgba(34, 197, 94, 0.08);
+  --blue: #3B82F6;
+  --blue-dim: rgba(59, 130, 246, 0.08);
+}
+
+html {
+  scroll-behavior: smooth;
+  background: var(--black);
+  color: var(--text);
+  font-family: 'Outfit', sans-serif;
+  font-size: 16px;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+
+body { background: var(--black); overflow-x: hidden; }
+a { color: inherit; text-decoration: none; }
+img { max-width: 100%; display: block; }
+
+/* ============ COMPONENTS ============ */
+.container { max-width: 1100px; margin: 0 auto; padding: 0 24px; }
+section { padding: 72px 0; position: relative; }
+@media (max-width: 768px) { section { padding: 48px 0; } }
+
+.section-label {
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 1rem;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.section-label::before { content: ''; width: 28px; height: 2px; background: var(--gold); }
+
+.section-title {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(1.6rem, 4vw, 2.5rem);
+  font-weight: 800;
+  line-height: 1.15;
+  letter-spacing: -0.02em;
+  margin-bottom: 1rem;
+}
+.section-title .gold { color: var(--gold); }
+
+.btn-primary {
+  display: inline-flex; align-items: center; gap: 6px;
+  padding: 14px 32px; background: var(--gold); color: var(--black);
+  font-weight: 700; font-size: 0.95rem; border-radius: 12px;
+  border: none; cursor: pointer; transition: all 0.25s ease;
+}
+.btn-primary:hover { background: #FBBF24; transform: translateY(-1px); box-shadow: 0 8px 30px var(--gold-glow-strong); }
+
+.btn-secondary {
+  display: inline-flex; align-items: center; gap: 6px;
+  padding: 14px 32px; background: transparent; color: var(--text);
+  font-weight: 600; font-size: 0.95rem; border-radius: 12px;
+  border: 1px solid var(--border-light); cursor: pointer; transition: all 0.25s ease;
+}
+.btn-secondary:hover { border-color: var(--gold); color: var(--gold); }
+
+/* ============ NAVBAR ============ */
+.navbar {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
+  padding: 14px 24px; display: flex; align-items: center; justify-content: space-between;
+  background: rgba(5, 5, 8, 0.9); backdrop-filter: blur(20px);
+  border-bottom: 1px solid rgba(245, 158, 11, 0.06);
+}
+.navbar-logo { display: flex; align-items: center; gap: 10px; font-weight: 800; font-size: 1.15rem; }
+.navbar-logo-icon { width: 32px; height: 32px; background: var(--gold); border-radius: 7px; display: flex; align-items: center; justify-content: center; font-weight: 900; font-size: 1rem; color: var(--black); }
+.navbar-links { display: flex; align-items: center; gap: 16px; }
+.navbar-back { font-size: 0.85rem; color: var(--text-dim); transition: color 0.2s; }
+.navbar-back:hover { color: var(--gold); }
+
+/* ============ HERO ============ */
+.hero {
+  min-height: 75vh; display: flex; align-items: center;
+  padding-top: 80px; position: relative; overflow: hidden;
+}
+.hero-bg {
+  position: absolute; inset: 0; z-index: 0;
+  background:
+    radial-gradient(ellipse 500px 500px at 20% 30%, rgba(245, 158, 11, 0.05) 0%, transparent 70%),
+    radial-gradient(ellipse 300px 300px at 80% 70%, rgba(245, 158, 11, 0.03) 0%, transparent 70%);
+}
+.hero-content { position: relative; z-index: 1; }
+.hero-badge {
+  display: inline-flex; align-items: center; gap: 6px;
+  background: var(--gold-glow); border: 1px solid rgba(245, 158, 11, 0.2);
+  color: var(--gold); font-size: 0.82rem; font-weight: 600;
+  padding: 8px 18px; border-radius: 30px; margin-bottom: 28px;
+}
+.hero h1 {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(1.8rem, 5vw, 3.2rem); font-weight: 900;
+  line-height: 1.1; letter-spacing: -0.02em; margin-bottom: 24px;
+}
+.hero h1 .gold { color: var(--gold); }
+.hero-subtitle { font-size: clamp(1.05rem, 2vw, 1.25rem); color: var(--text-dim); max-width: 620px; margin-bottom: 40px; line-height: 1.65; }
+.hero-ctas { display: flex; gap: 16px; flex-wrap: wrap; }
+.hero-data { display: inline-flex; align-items: center; gap: 6px; font-size: 0.82rem; color: var(--text-muted); margin-top: 16px; }
+.hero-data::before { content: ''; width: 6px; height: 6px; background: var(--green); border-radius: 50%; }
+
+/* ============ PAIN SECTION ============ */
+.pain { background: var(--black-light); }
+.pain-intro { font-size: 1.1rem; color: var(--text-dim); max-width: 700px; margin-bottom: 48px; line-height: 1.7; }
+
+.pain-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
+@media (max-width: 768px) { .pain-grid { grid-template-columns: 1fr; } }
+@media (min-width: 769px) { .pain-grid .pain-card:nth-child(4),
+.pain-grid .pain-card:nth-child(5) { max-width: 100%; } }
+
+.pain-card {
+  background: var(--surface); border: 1px solid var(--border); border-radius: 16px;
+  padding: 24px 22px; position: relative; overflow: hidden; transition: border-color 0.3s;
+}
+.pain-card:hover { border-color: rgba(239, 68, 68, 0.2); }
+.pain-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px; background: linear-gradient(90deg, var(--red), transparent); opacity: 0.5; }
+.pain-icon { font-size: 1.8rem; margin-bottom: 16px; }
+.pain-card h3 { font-size: 1.15rem; font-weight: 700; margin-bottom: 10px; }
+.pain-card p { font-size: 0.95rem; color: var(--text-muted); line-height: 1.6; }
+
+/* ============ TEAM SECTION ============ */
+.team-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; margin-top: 32px; }
+@media (max-width: 768px) { .team-grid { grid-template-columns: 1fr; } }
+
+.agent-card {
+  background: var(--surface); border: 1px solid var(--border); border-radius: 16px;
+  padding: 24px 22px; transition: all 0.3s ease;
+}
+.agent-card:hover { border-color: var(--gold-dim); transform: translateY(-2px); }
+.agent-card.full-width { grid-column: 1 / -1; }
+
+.agent-header { display: flex; align-items: center; gap: 16px; margin-bottom: 16px; }
+.agent-avatar {
+  width: 52px; height: 52px; border-radius: 50%; display: flex;
+  align-items: center; justify-content: center; font-size: 1.3rem; font-weight: 800; color: #fff; flex-shrink: 0;
+}
+.agent-name { font-size: 1.2rem; font-weight: 700; }
+.agent-role { font-size: 0.82rem; color: var(--text-muted); font-weight: 500; }
+.agent-tag {
+  display: inline-block; font-size: 0.7rem; font-weight: 700; padding: 3px 10px;
+  border-radius: 20px; letter-spacing: 0.05em; text-transform: uppercase; margin-top: 4px;
+}
+
+.agent-desc { color: var(--text-dim); font-size: 0.95rem; line-height: 1.6; margin-bottom: 16px; }
+
+.agent-skills { list-style: none; display: flex; flex-direction: column; gap: 6px; }
+.agent-skills li {
+  display: flex; align-items: flex-start; gap: 10px;
+  font-size: 0.9rem; color: var(--text-muted); line-height: 1.5;
+}
+.agent-skills li::before { content: '\2192'; color: var(--gold); font-weight: 700; flex-shrink: 0; }
+
+/* ============ SCENARIOS ============ */
+.scenarios-list { display: flex; flex-direction: column; gap: 16px; margin-top: 32px; }
+
+.scenario-card {
+  border: 1px solid var(--border); border-radius: 16px; overflow: hidden; background: var(--surface);
+}
+.scenario-card summary {
+  display: flex; align-items: center; gap: 16px; padding: 24px 28px;
+  cursor: pointer; list-style: none; user-select: none; transition: background 0.2s;
+}
+.scenario-card summary::-webkit-details-marker { display: none; }
+.scenario-card summary::marker { display: none; content: ''; }
+.scenario-card summary:hover { background: rgba(255,255,255,0.015); }
+
+.scenario-time { font-size: 0.8rem; font-weight: 700; color: var(--gold); background: var(--gold-glow); padding: 4px 12px; border-radius: 20px; flex-shrink: 0; white-space: nowrap; }
+.scenario-title { flex: 1; font-size: 1.05rem; font-weight: 600; }
+.scenario-agents { font-size: 0.82rem; color: var(--text-muted); flex-shrink: 0; }
+.scenario-chevron { color: var(--text-muted); transition: transform 0.3s; }
+.scenario-card[open] .scenario-chevron { transform: rotate(180deg); }
+.scenario-card[open] summary { border-bottom: 1px solid var(--border); }
+
+.scenario-expanded {
+  padding: 22px; animation: fadeIn 0.3s ease;
+}
+@keyframes fadeIn { from { opacity: 0; transform: translateY(-6px); } to { opacity: 1; transform: translateY(0); } }
+
+.scenario-flow {
+  display: flex; flex-direction: column; gap: 16px;
+}
+.scenario-step {
+  display: flex; gap: 16px; align-items: flex-start;
+}
+.scenario-step-dot {
+  width: 10px; height: 10px; border-radius: 50%; margin-top: 7px; flex-shrink: 0;
+}
+.scenario-step-content { flex: 1; }
+.scenario-step-who { font-size: 0.82rem; font-weight: 700; margin-bottom: 4px; }
+.scenario-step-what { font-size: 0.92rem; color: var(--text-dim); line-height: 1.6; }
+
+/* ============ ROI ============ */
+.roi { background: var(--black-light); }
+.roi-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; margin-top: 32px; }
+@media (max-width: 768px) { .roi-grid { grid-template-columns: 1fr; } }
+
+.roi-card {
+  background: var(--surface); border: 1px solid var(--border); border-radius: 16px;
+  padding: 24px 22px; text-align: center; transition: all 0.3s;
+}
+.roi-card:hover { border-color: rgba(245, 158, 11, 0.2); transform: translateY(-2px); }
+.roi-card.highlight { border-color: var(--gold); background: linear-gradient(180deg, rgba(245, 158, 11, 0.05), var(--surface) 60%); grid-column: 1 / -1; }
+
+.roi-value {
+  font-family: 'Playfair Display', serif; font-size: 2.5rem; font-weight: 900;
+  color: var(--gold); line-height: 1; margin-bottom: 8px;
+  text-shadow: 0 0 40px var(--gold-glow);
+}
+.roi-label { font-size: 0.95rem; color: var(--text-muted); }
+
+/* ============ COMPARISON TABLE ============ */
+.comparison { margin-top: 36px; overflow-x: auto; }
+.comparison table {
+  width: 100%; border-collapse: collapse; font-size: 0.92rem;
+}
+.comparison th {
+  text-align: left; padding: 14px 20px; font-weight: 700; font-size: 0.8rem;
+  letter-spacing: 0.1em; text-transform: uppercase; color: var(--text-muted);
+  border-bottom: 2px solid var(--border);
+}
+.comparison td {
+  padding: 14px 20px; border-bottom: 1px solid var(--border); color: var(--text-dim);
+}
+.comparison tr:hover td { background: rgba(255,255,255,0.01); }
+.comparison .val-bad { color: var(--red); font-weight: 600; }
+.comparison .val-good { color: var(--green); font-weight: 600; }
+
+/* ============ MEETING ============ */
+.meeting-card {
+  background: var(--surface); border: 1px solid var(--border); border-left: 4px solid var(--gold);
+  border-radius: 16px; padding: 24px; margin-top: 32px;
+}
+.meeting-header { font-weight: 700; color: var(--gold); font-size: 0.95rem; margin-bottom: 20px; display: flex; align-items: center; gap: 10px; }
+.meeting-messages { display: flex; flex-direction: column; gap: 12px; }
+.meeting-msg {
+  display: flex; gap: 12px; align-items: flex-start;
+  font-size: 0.9rem; color: var(--text-dim); line-height: 1.5;
+}
+.meeting-msg-from { font-weight: 700; color: var(--text); white-space: nowrap; min-width: 160px; flex-shrink: 0; }
+
+/* ============ CTA SECTION ============ */
+.cta-section {
+  text-align: center; padding: 100px 24px; position: relative; overflow: hidden;
+}
+.cta-section::before {
+  content: ''; position: absolute; top: 0; left: 0; right: 0;
+  height: 1px; background: linear-gradient(90deg, transparent, var(--gold), transparent);
+}
+.cta-buttons { display: flex; justify-content: center; gap: 16px; flex-wrap: wrap; margin-top: 40px; }
+.cta-note { color: var(--text-muted); font-size: 0.9rem; margin-top: 24px; }
+
+/* ============ BREADCRUMB ============ */
+.breadcrumb { font-size: 0.82rem; color: var(--text-muted); margin-bottom: 8px; }
+.breadcrumb a { color: var(--gold); }
+.breadcrumb a:hover { text-decoration: underline; }
+
+/* ============ FOOTER ============ */
+.footer { text-align: center; padding: 40px 24px; color: var(--text-muted); font-size: 0.82rem; border-top: 1px solid var(--border); }
+
+/* ============ NOISE ============ */
+body::after {
+  content: ''; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+  opacity: 0.012; pointer-events: none; z-index: 9999;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+@media print {
+  .navbar { display: none; }
+  body::after { display: none; }
+  section { padding: 32px 0; break-inside: avoid; }
+  * { color: #000 !important; background: #fff !important; }
+}
+</style>
+</head>
+<body>
+
+<!-- NAVBAR -->
+<nav class="navbar">
+  <div class="navbar-logo">
+    <div class="navbar-logo-icon">A</div>
+    <span>Aurelius IA</span>
+  </div>
+  <div class="navbar-links">
+    <a href="apresentacao.html" class="navbar-back">&larr; Todos os segmentos</a>
+    <a href="https://aurelius.ia.br" class="btn-primary" style="padding: 10px 24px; font-size: 0.85rem;">Testar grátis &rarr;</a>
+  </div>
+</nav>
+
+<!-- ============ HERO ============ -->
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="container hero-content">
+    <div class="breadcrumb"><a href="apresentacao.html">Aurelius IA</a> / Aluguel de Imóveis</div>
+    <div class="hero-badge">&#127960; Aluguel de Imóveis</div>
+    <h1>16 mensagens por dia. 6 assuntos diferentes.<br>Você tem <span class="gold">quantos braços?</span></h1>
+    <p class="hero-subtitle">
+      Inquilino com problema de internet, lead querendo alugar, contrato com cláusula errada, vizinho reclamando de barulho — tudo no mesmo WhatsApp. E se uma equipe digital separasse tudo e te avisasse só o que precisa de você?
+    </p>
+    <div class="hero-ctas">
+      <a href="https://aurelius.ia.br" class="btn-primary">Testar grátis 7 dias &rarr;</a>
+      <a href="#equipe" class="btn-secondary">Ver a equipe digital &darr;</a>
+    </div>
+    <div class="hero-data">Case real: 63 sessões analisadas, ~16 conversas/dia — Residencial Pinhais</div>
+  </div>
+</section>
+
+<!-- ============ THE PAIN ============ -->
+<section class="pain">
+  <div class="container">
+    <div class="section-label">O Dia a Dia</div>
+    <h2 class="section-title">5 frentes simultâneas.<br><span class="gold">1 WhatsApp.</span> Zero controle.</h2>
+    <p class="pain-intro">Um proprietário com múltiplas unidades de aluguel recebe pelo menos 5 tipos de demanda diferentes — todas no mesmo WhatsApp, todas misturadas, várias "urgentes".</p>
+    <div class="pain-grid">
+      <div class="pain-card">
+        <div class="pain-icon">&#128222;</div>
+        <h3>16+ mensagens por dia</h3>
+        <p>Lead quer alugar, inquilino reclama da internet, outro pede 2ª via de boleto — tudo misturado no mesmo chat. Você lê 16 e age em 3.</p>
+      </div>
+      <div class="pain-card">
+        <div class="pain-icon">&#127962;</div>
+        <h3>Todas as unidades locadas</h3>
+        <p>80% dos leads ouvem "está tudo locado" e vão embora. Sem fila de espera, sem previsão de vaga, sem follow-up. Lead perdido pra sempre.</p>
+      </div>
+      <div class="pain-card">
+        <div class="pain-icon">&#128295;</div>
+        <h3>Manutenção técnica</h3>
+        <p>Inquilino manda foto de infiltração às 23h. Você vê às 8h. Problema piorou, inquilino irritado, reparo mais caro.</p>
+      </div>
+      <div class="pain-card">
+        <div class="pain-icon">&#128209;</div>
+        <h3>Questões contratuais</h3>
+        <p>Contrato diz 12 meses mas combinaram 6. Inquilino manda texto, bot pede foto. Frustração dos dois lados.</p>
+      </div>
+      <div class="pain-card">
+        <div class="pain-icon">&#128260;</div>
+        <h3>Liberou vaga mas ninguém sabe</h3>
+        <p>Unidade liberou na sexta, fila de espera tem 12 pessoas. Quem avisa? Ninguém — manualmente, um por um, leva horas.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ THE TEAM ============ -->
+<section id="equipe">
+  <div class="container">
+    <div class="section-label">A Equipe Digital</div>
+    <h2 class="section-title">4 agentes especializados.<br>Cada um com <span class="gold">tom, conhecimento e função</span> próprios.</h2>
+    <div class="team-grid">
+
+      <div class="agent-card">
+        <div class="agent-header">
+          <div class="agent-avatar" style="background: #3B82F6;">B</div>
+          <div>
+            <div class="agent-name">Bruna</div>
+            <div class="agent-role">Novos Leads / Fila de Espera</div>
+            <span class="agent-tag" style="background: var(--blue-dim); color: var(--blue);">Comercial</span>
+          </div>
+        </div>
+        <p class="agent-desc">Simpática, ágil, comercial. Atende leads 24h, informa disponibilidade, e quando tudo está lotado, coloca na fila de espera COM previsão. Quando vaga libera, avisa toda a fila automaticamente.</p>
+        <ul class="agent-skills">
+          <li>FAQ de valores, condições e regras do imóvel</li>
+          <li>Fila de espera inteligente com previsão de data</li>
+          <li>Qualifica: tipo de imóvel, faixa de valor, data de entrada</li>
+          <li>Agendamento de visita automático</li>
+          <li>Vaga liberou? Avisa fila inteira em segundos com fotos e valores</li>
+        </ul>
+      </div>
+
+      <div class="agent-card">
+        <div class="agent-header">
+          <div class="agent-avatar" style="background: #F59E0B;">E</div>
+          <div>
+            <div class="agent-name">Eva</div>
+            <div class="agent-role">Porteiro Digital (Triagem)</div>
+            <span class="agent-tag" style="background: var(--gold-glow); color: var(--gold);">Triagem</span>
+          </div>
+        </div>
+        <p class="agent-desc">Rápida, precisa, invisível. Classifica cada mensagem: lead novo, inquilino com problema, questão contratual ou convivência. Redireciona em tempo real pro agente certo.</p>
+        <ul class="agent-skills">
+          <li>Classifica: Lead / Inquilino / Contratual / Convivência</li>
+          <li>Conversa com múltiplos assuntos = redireciona cada um</li>
+          <li>Detecta urgência e prioriza automaticamente</li>
+          <li>Zero tempo de espera — triagem instantânea</li>
+        </ul>
+      </div>
+
+      <div class="agent-card">
+        <div class="agent-header">
+          <div class="agent-avatar" style="background: #22C55E;">A</div>
+          <div>
+            <div class="agent-name">Amanda</div>
+            <div class="agent-role">Inquilinos + Manutenção</div>
+            <span class="agent-tag" style="background: var(--green-dim); color: var(--green);">Suporte</span>
+          </div>
+        </div>
+        <p class="agent-desc">Tom paciente, resolutivo. Problema de WiFi? Orienta reiniciar modem; se persistir em 10 min, aciona técnico de plantão. Barulho do vizinho? Registra ocorrência e orienta regras de convivência.</p>
+        <ul class="agent-skills">
+          <li>Troubleshooting WiFi, elétrica, hidráulica</li>
+          <li>Coleta fotos de manutenção, classifica urgência</li>
+          <li>Agendamento de técnico com horário e tipo de reparo</li>
+          <li>Registro de ocorrências de convivência (barulho, limpeza)</li>
+          <li>Orienta regras do condomínio e convivência</li>
+        </ul>
+      </div>
+
+      <div class="agent-card">
+        <div class="agent-header">
+          <div class="agent-avatar" style="background: #8B5CF6;">H</div>
+          <div>
+            <div class="agent-name">Helena</div>
+            <div class="agent-role">Contratos + Jurídico</div>
+            <span class="agent-tag" style="background: rgba(139, 92, 246, 0.1); color: #8B5CF6;">Jurídico</span>
+          </div>
+        </div>
+        <p class="agent-desc">Técnica, cuidadosa, precisa. Trata questões contratuais: prazo, reajuste, rescisão. Dr. Fiscal analisa foto de contrato ou cláusula. Escala pro proprietário quando decisão é necessária — já com análise pronta.</p>
+        <ul class="agent-skills">
+          <li>Questões de prazo, reajuste anual, multa rescisória</li>
+          <li>Dr. Fiscal analisa foto de contrato via visão computacional</li>
+          <li>Escala pro proprietário com análise pronta e recomendação</li>
+          <li>Controle de vencimentos e renovações</li>
+        </ul>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ============ SCENARIOS ============ -->
+<section style="background: var(--black-light);">
+  <div class="container">
+    <div class="section-label">Cenários Reais</div>
+    <h2 class="section-title">Veja como a equipe resolve <span class="gold">situações do dia a dia.</span></h2>
+    <div class="scenarios-list">
+
+      <details class="scenario-card">
+        <summary>
+          <span class="scenario-time">08:30</span>
+          <span class="scenario-title">Lead pergunta sobre kitnet disponível</span>
+          <span class="scenario-agents">Eva &rarr; Bruna</span>
+          <span class="scenario-chevron">&#9660;</span>
+        </summary>
+        <div class="scenario-expanded">
+          <div class="scenario-flow">
+            <div class="scenario-step">
+              <div class="scenario-step-dot" style="background: #F59E0B;"></div>
+              <div class="scenario-step-content">
+                <div class="scenario-step-who" style="color: var(--gold);">Eva (Triagem)</div>
+                <div class="scenario-step-what">Recebe mensagem: "Oi, vi o anúncio da kitnet. Tem disponível?" Eva classifica como lead novo e transfere pra Bruna instantaneamente.</div>
+              </div>
+            </div>
+            <div class="scenario-step">
+              <div class="scenario-step-dot" style="background: #3B82F6;"></div>
+              <div class="scenario-step-content">
+                <div class="scenario-step-who" style="color: #60A5FA;">Bruna (Comercial)</div>
+                <div class="scenario-step-what">Informa que todas as unidades estão locadas no momento, MAS coloca o lead na fila de espera com previsão: "Temos previsão de liberação de uma kitnet no final de abril. Posso te avisar assim que liberar? Qual seu nome e faixa de valor?"</div>
+              </div>
+            </div>
+            <div class="scenario-step">
+              <div class="scenario-step-dot" style="background: #22C55E;"></div>
+              <div class="scenario-step-content">
+                <div class="scenario-step-who" style="color: #4ADE80;">Resultado</div>
+                <div class="scenario-step-what">Lead que antes ouviria "está tudo locado" e iria embora agora está na fila com previsão. Quando a vaga liberar, Bruna avisa automaticamente. Zero leads perdidos.</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </details>
+
+      <details class="scenario-card">
+        <summary>
+          <span class="scenario-time">10:15</span>
+          <span class="scenario-title">Inquilina Caroline: internet + barulho + quer mudar de bloco</span>
+          <span class="scenario-agents">Eva &rarr; Amanda + Bruna</span>
+          <span class="scenario-chevron">&#9660;</span>
+        </summary>
+        <div class="scenario-expanded">
+          <div class="scenario-flow">
+            <div class="scenario-step">
+              <div class="scenario-step-dot" style="background: #F59E0B;"></div>
+              <div class="scenario-step-content">
+                <div class="scenario-step-who" style="color: var(--gold);">Eva (Triagem)</div>
+                <div class="scenario-step-what">Caroline manda 3 mensagens seguidas: internet caiu, vizinho do 302 faz barulho toda noite, e quer saber se tem vaga em outro bloco. Eva classifica: suporte técnico, convivência e comercial — cada um pro agente certo.</div>
+              </div>
+            </div>
+            <div class="scenario-step">
+              <div class="scenario-step-dot" style="background: #22C55E;"></div>
+              <div class="scenario-step-content">
+                <div class="scenario-step-who" style="color: #4ADE80;">Amanda (Suporte)</div>
+                <div class="scenario-step-what">Resolve internet: "Caroline, reinicie o modem (desligue, aguarde 30s, ligue). Se em 10 minutos não voltar, aciono o técnico de plantão." Registra ocorrência de barulho do 302, orienta sobre regras de convivência e horário de silêncio.</div>
+              </div>
+            </div>
+            <div class="scenario-step">
+              <div class="scenario-step-dot" style="background: #3B82F6;"></div>
+              <div class="scenario-step-content">
+                <div class="scenario-step-who" style="color: #60A5FA;">Bruna (Comercial)</div>
+                <div class="scenario-step-what">Verifica disponibilidade em outro bloco. Informa Caroline sobre previsão e condições de transferência interna.</div>
+              </div>
+            </div>
+            <div class="scenario-step">
+              <div class="scenario-step-dot" style="background: #22C55E;"></div>
+              <div class="scenario-step-content">
+                <div class="scenario-step-who" style="color: #4ADE80;">Resultado</div>
+                <div class="scenario-step-what">3 problemas diferentes resolvidos em paralelo, cada um pelo agente especializado. Sem a IA, seriam 3 idas e vindas no WhatsApp ao longo do dia — com metade esquecida.</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </details>
+
+      <details class="scenario-card">
+        <summary>
+          <span class="scenario-time">14:00</span>
+          <span class="scenario-title">Contrato diz 12 meses mas combinaram 6</span>
+          <span class="scenario-agents">Eva &rarr; Helena + Dr. Fiscal</span>
+          <span class="scenario-chevron">&#9660;</span>
+        </summary>
+        <div class="scenario-expanded">
+          <div class="scenario-flow">
+            <div class="scenario-step">
+              <div class="scenario-step-dot" style="background: #F59E0B;"></div>
+              <div class="scenario-step-content">
+                <div class="scenario-step-who" style="color: var(--gold);">Eva (Triagem)</div>
+                <div class="scenario-step-what">Inquilino manda: "No contrato tá 12 meses mas o Wagner falou que era 6. Tá errado." Eva detecta assunto contratual e transfere pra Helena.</div>
+              </div>
+            </div>
+            <div class="scenario-step">
+              <div class="scenario-step-dot" style="background: #8B5CF6;"></div>
+              <div class="scenario-step-content">
+                <div class="scenario-step-who" style="color: #A78BFA;">Helena (Jurídico)</div>
+                <div class="scenario-step-what">Pede a foto do contrato: "Pode me enviar uma foto da página com a cláusula de prazo? Vou verificar." Inquilino envia foto.</div>
+              </div>
+            </div>
+            <div class="scenario-step">
+              <div class="scenario-step-dot" style="background: #8B5CF6;"></div>
+              <div class="scenario-step-content">
+                <div class="scenario-step-who" style="color: #A78BFA;">Dr. Fiscal (Análise)</div>
+                <div class="scenario-step-what">Analisa a foto via visão computacional: identifica cláusula 4.1, prazo de 12 meses, multa proporcional. Estrutura os dados e devolve pra Helena.</div>
+              </div>
+            </div>
+            <div class="scenario-step">
+              <div class="scenario-step-dot" style="background: #F59E0B;"></div>
+              <div class="scenario-step-content">
+                <div class="scenario-step-who" style="color: var(--gold);">Escalação</div>
+                <div class="scenario-step-what">Helena escala pro proprietário com análise pronta: "Contrato do inquilino X diz 12 meses (cláusula 4.1). Ele alega acordo verbal de 6. Recomendação: aditivo contratual." Proprietário decide em 2 minutos em vez de analisar sozinho.</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </details>
+
+      <details class="scenario-card">
+        <summary>
+          <span class="scenario-time">Sex 17h</span>
+          <span class="scenario-title">Liberou o kit 205 — fila de espera tem 12 pessoas</span>
+          <span class="scenario-agents">Heartbeat &rarr; Bruna</span>
+          <span class="scenario-chevron">&#9660;</span>
+        </summary>
+        <div class="scenario-expanded">
+          <div class="scenario-flow">
+            <div class="scenario-step">
+              <div class="scenario-step-dot" style="background: #F59E0B;"></div>
+              <div class="scenario-step-content">
+                <div class="scenario-step-who" style="color: var(--gold);">Heartbeat (Proativo)</div>
+                <div class="scenario-step-what">Detecta: inquilino do kit 205 confirmou saída. Cruza com fila de espera: 12 pessoas aguardando kitnet. Dispara alerta pra Bruna agir.</div>
+              </div>
+            </div>
+            <div class="scenario-step">
+              <div class="scenario-step-dot" style="background: #3B82F6;"></div>
+              <div class="scenario-step-content">
+                <div class="scenario-step-who" style="color: #60A5FA;">Bruna (Comercial)</div>
+                <div class="scenario-step-what">Avisa os 12 da fila automaticamente: "Boa notícia! Liberou uma kitnet no bloco B — R$X/mês, disponível a partir de 01/05. Quer agendar visita?" Envia fotos e condições pra cada um.</div>
+              </div>
+            </div>
+            <div class="scenario-step">
+              <div class="scenario-step-dot" style="background: #22C55E;"></div>
+              <div class="scenario-step-content">
+                <div class="scenario-step-who" style="color: #4ADE80;">Resultado</div>
+                <div class="scenario-step-what">12 leads avisados em segundos. 3 agendam visita pro sábado. Unidade locada antes da segunda-feira. Sem a IA, você avisaria 1 por 1 na segunda — e metade já teria alugado outro lugar.</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </details>
+
+    </div>
+  </div>
+</section>
+
+<!-- ============ MEETING ============ -->
+<section>
+  <div class="container">
+    <div class="section-label">Reunião Entre Agentes</div>
+    <h2 class="section-title">Seus agentes conversam entre si.<br><span class="gold">Automaticamente.</span></h2>
+    <p style="color: var(--text-dim); max-width: 700px; margin-bottom: 8px; font-size: 1.05rem; line-height: 1.7;">Uma vez por dia, os agentes fazem uma reunião e compartilham informações. Sem você pedir. Veja um exemplo real:</p>
+    <div class="meeting-card">
+      <div class="meeting-header">&#128203; Reunião das 12h — Resumo</div>
+      <div class="meeting-messages">
+        <div class="meeting-msg"><span class="meeting-msg-from" style="color: #60A5FA;">Bruna &rarr; Amanda:</span> 12 na fila de espera. 3 com urgência (prazo de saída do atual &lt; 30 dias). Preparar vistorias.</div>
+        <div class="meeting-msg"><span class="meeting-msg-from" style="color: #4ADE80;">Amanda &rarr; Helena:</span> Inquilino 204 reclamou de cláusula de reajuste. Verificar contrato antes de responder.</div>
+        <div class="meeting-msg"><span class="meeting-msg-from" style="color: #4ADE80;">Amanda &rarr; Bruna:</span> Kit 205 vai liberar dia 20/04. Inquilino atual confirmou saída. Pode avisar fila.</div>
+        <div class="meeting-msg"><span class="meeting-msg-from" style="color: #A78BFA;">Helena &rarr; Proprietário:</span> 2 contratos vencem este mês. 1 quer renovar, 1 quer rescindir. Multa aplicável calculada e pronta pra decisão.</div>
+        <div class="meeting-msg"><span class="meeting-msg-from" style="color: var(--gold);">Heartbeat &rarr; Todos:</span> Certificado de vistoria do bloco B vence em 15 dias. Agendar inspeção?</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ ROI ============ -->
+<section class="roi">
+  <div class="container">
+    <div class="section-label">O Retorno</div>
+    <h2 class="section-title">De 16 mensagens por dia,<br>só <span class="gold">3 precisam de você.</span></h2>
+    <div class="roi-grid">
+      <div class="roi-card">
+        <div class="roi-value">16&rarr;3</div>
+        <div class="roi-label">Mensagens que precisam da sua atenção<br><small style="color: var(--text-muted);">(de 16/dia para apenas 3)</small></div>
+      </div>
+      <div class="roi-card">
+        <div class="roi-value">24/7</div>
+        <div class="roi-label">Atendimento a leads e inquilinos<br><small style="color: var(--text-muted);">(inclusive madrugada e fim de semana)</small></div>
+      </div>
+      <div class="roi-card">
+        <div class="roi-value">0</div>
+        <div class="roi-label">Leads perdidos por falta de resposta<br><small style="color: var(--text-muted);">(todos entram na fila com previsão)</small></div>
+      </div>
+      <div class="roi-card">
+        <div class="roi-value">100%</div>
+        <div class="roi-label">Fila de espera avisada quando vaga libera<br><small style="color: var(--text-muted);">(em segundos, não em dias)</small></div>
+      </div>
+      <div class="roi-card highlight">
+        <div class="roi-value" style="font-size: 3.2rem;">4h/dia</div>
+        <div class="roi-label" style="font-size: 1.1rem; color: var(--text);">Tempo que você recupera (era gasto no WhatsApp respondendo mensagem por mensagem)</div>
+      </div>
+    </div>
+
+    <!-- COMPARISON TABLE -->
+    <div class="comparison">
+      <h3 style="font-size: 1.3rem; font-weight: 700; margin-bottom: 24px; margin-top: 40px;">Antes vs. Depois — com dados reais</h3>
+      <table>
+        <thead>
+          <tr><th>Métrica</th><th>Antes</th><th>Com Aurelius</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Lead sem resposta</td><td class="val-bad">80% ouve "lotado" e vai embora</td><td class="val-good">100% entra na fila com previsão</td></tr>
+          <tr><td>Manutenção urgente</td><td class="val-bad">Vê às 8h problema das 23h</td><td class="val-good">Amanda resolve na hora ou escala</td></tr>
+          <tr><td>Vaga liberou</td><td class="val-bad">Avisa manualmente 1 por 1</td><td class="val-good">Bruna avisa fila inteira em segundos</td></tr>
+          <tr><td>Questão contratual</td><td class="val-bad">Proprietário analisa sozinho</td><td class="val-good">Helena + Dr. Fiscal preparam análise</td></tr>
+          <tr><td>Convivência (barulho)</td><td class="val-bad">Sem registro formal</td><td class="val-good">Amanda registra + orienta regras</td></tr>
+          <tr><td>Tempo gasto/dia</td><td class="val-bad">4+ horas no WhatsApp</td><td class="val-good">30 minutos revisando briefing</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<!-- ============ CTA ============ -->
+<section class="cta-section">
+  <div class="container">
+    <h2 class="section-title">Pronto pra parar de ser <span class="gold">síndico no WhatsApp?</span></h2>
+    <div class="cta-buttons">
+      <a href="https://aurelius.ia.br" class="btn-primary" style="padding: 18px 40px; font-size: 1.1rem;">Começar agora — 7 dias grátis &rarr;</a>
+      <a href="https://wa.me/5541984520339" class="btn-secondary">Falar com consultor</a>
+    </div>
+    <p class="cta-note">Sem cartão de crédito. Setup em 5 minutos. Cancele quando quiser.</p>
+  </div>
+</section>
+
+<footer class="footer">&copy; 2026 Aurelius IA &middot; aurelius.ia.br</footer>
+
+</body>
+</html>

@@ -1,0 +1,699 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Aurelius IA para Clínicas e Consultórios — Atendimento Automático no WhatsApp</title>
+<meta name="description" content="IA para clínica médica e dentista: reduz faltas de 25% para 5%, agendamento 24h, follow-up pós-consulta automático. ROI +53%. Teste grátis.">
+<meta name="keywords" content="IA clínica, WhatsApp consultório, atendimento automático clínica, chatbot dentista, inteligência artificial saúde, agendamento automático médico">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=Playfair+Display:ital,wght@0,700;0,800;0,900;1,700&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+:root {
+  --black: #050508;
+  --black-light: #0a0a10;
+  --surface: #0f0f18;
+  --surface-2: #16161f;
+  --border: #1e1e2a;
+  --border-light: #2a2a3a;
+  --gold: #F59E0B;
+  --gold-dim: #D97706;
+  --gold-glow: rgba(245, 158, 11, 0.15);
+  --gold-glow-strong: rgba(245, 158, 11, 0.3);
+  --text: #F1F5F9;
+  --text-dim: #94A3B8;
+  --text-muted: #64748B;
+  --red: #EF4444;
+  --red-dim: rgba(239, 68, 68, 0.08);
+  --green: #22C55E;
+  --green-dim: rgba(34, 197, 94, 0.08);
+  --blue: #3B82F6;
+  --blue-dim: rgba(59, 130, 246, 0.08);
+}
+
+html {
+  scroll-behavior: smooth;
+  background: var(--black);
+  color: var(--text);
+  font-family: 'Outfit', sans-serif;
+  font-size: 16px;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+
+body { background: var(--black); overflow-x: hidden; }
+a { color: inherit; text-decoration: none; }
+img { max-width: 100%; display: block; }
+
+/* ============ COMPONENTS ============ */
+.container { max-width: 1100px; margin: 0 auto; padding: 0 24px; }
+section { padding: 72px 0; position: relative; }
+@media (max-width: 768px) { section { padding: 48px 0; } }
+
+.section-label {
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 1rem;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.section-label::before { content: ''; width: 28px; height: 2px; background: var(--gold); }
+
+.section-title {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(1.6rem, 4vw, 2.5rem);
+  font-weight: 800;
+  line-height: 1.15;
+  letter-spacing: -0.02em;
+  margin-bottom: 1rem;
+}
+.section-title .gold { color: var(--gold); }
+
+.btn-primary {
+  display: inline-flex; align-items: center; gap: 6px;
+  padding: 14px 32px; background: var(--gold); color: var(--black);
+  font-weight: 700; font-size: 0.95rem; border-radius: 12px;
+  border: none; cursor: pointer; transition: all 0.25s ease;
+}
+.btn-primary:hover { background: #FBBF24; transform: translateY(-1px); box-shadow: 0 8px 30px var(--gold-glow-strong); }
+
+.btn-secondary {
+  display: inline-flex; align-items: center; gap: 6px;
+  padding: 14px 32px; background: transparent; color: var(--text);
+  font-weight: 600; font-size: 0.95rem; border-radius: 12px;
+  border: 1px solid var(--border-light); cursor: pointer; transition: all 0.25s ease;
+}
+.btn-secondary:hover { border-color: var(--gold); color: var(--gold); }
+
+/* ============ NAVBAR ============ */
+.navbar {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
+  padding: 14px 24px; display: flex; align-items: center; justify-content: space-between;
+  background: rgba(5, 5, 8, 0.9); backdrop-filter: blur(20px);
+  border-bottom: 1px solid rgba(245, 158, 11, 0.06);
+}
+.navbar-logo { display: flex; align-items: center; gap: 10px; font-weight: 800; font-size: 1.15rem; }
+.navbar-logo-icon { width: 32px; height: 32px; background: var(--gold); border-radius: 7px; display: flex; align-items: center; justify-content: center; font-weight: 900; font-size: 1rem; color: var(--black); }
+.navbar-links { display: flex; align-items: center; gap: 16px; }
+.navbar-back { font-size: 0.85rem; color: var(--text-dim); transition: color 0.2s; }
+.navbar-back:hover { color: var(--gold); }
+
+/* ============ HERO ============ */
+.hero {
+  min-height: 75vh; display: flex; align-items: center;
+  padding-top: 80px; position: relative; overflow: hidden;
+}
+.hero-bg {
+  position: absolute; inset: 0; z-index: 0;
+  background:
+    radial-gradient(ellipse 500px 500px at 20% 30%, rgba(245, 158, 11, 0.05) 0%, transparent 70%),
+    radial-gradient(ellipse 300px 300px at 80% 70%, rgba(245, 158, 11, 0.03) 0%, transparent 70%);
+}
+.hero-content { position: relative; z-index: 1; }
+.hero-badge {
+  display: inline-flex; align-items: center; gap: 6px;
+  background: var(--gold-glow); border: 1px solid rgba(245, 158, 11, 0.2);
+  color: var(--gold); font-size: 0.82rem; font-weight: 600;
+  padding: 8px 18px; border-radius: 30px; margin-bottom: 28px;
+}
+.hero h1 {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(1.8rem, 5vw, 3.2rem); font-weight: 900;
+  line-height: 1.1; letter-spacing: -0.02em; margin-bottom: 24px;
+}
+.hero h1 .gold { color: var(--gold); }
+.hero-subtitle { font-size: clamp(1.05rem, 2vw, 1.25rem); color: var(--text-dim); max-width: 620px; margin-bottom: 40px; line-height: 1.65; }
+.hero-ctas { display: flex; gap: 16px; flex-wrap: wrap; }
+
+/* ============ PAIN SECTION ============ */
+.pain { background: var(--black-light); }
+.pain-intro { font-size: 1.1rem; color: var(--text-dim); max-width: 700px; margin-bottom: 48px; line-height: 1.7; }
+
+.pain-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
+@media (max-width: 768px) { .pain-grid { grid-template-columns: 1fr; } }
+
+.pain-card {
+  background: var(--surface); border: 1px solid var(--border); border-radius: 16px;
+  padding: 24px 22px; position: relative; overflow: hidden; transition: border-color 0.3s;
+}
+.pain-card:hover { border-color: rgba(239, 68, 68, 0.2); }
+.pain-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px; background: linear-gradient(90deg, var(--red), transparent); opacity: 0.5; }
+.pain-icon { font-size: 1.8rem; margin-bottom: 16px; }
+.pain-card h3 { font-size: 1.15rem; font-weight: 700; margin-bottom: 10px; }
+.pain-card p { font-size: 0.95rem; color: var(--text-muted); line-height: 1.6; }
+
+/* ============ TEAM SECTION ============ */
+.team-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; margin-top: 32px; }
+@media (max-width: 768px) { .team-grid { grid-template-columns: 1fr; } }
+
+.agent-card {
+  background: var(--surface); border: 1px solid var(--border); border-radius: 16px;
+  padding: 24px 22px; transition: all 0.3s ease;
+}
+.agent-card:hover { border-color: var(--gold-dim); transform: translateY(-2px); }
+.agent-card.full-width { grid-column: 1 / -1; }
+
+.agent-header { display: flex; align-items: center; gap: 16px; margin-bottom: 16px; }
+.agent-avatar {
+  width: 52px; height: 52px; border-radius: 50%; display: flex;
+  align-items: center; justify-content: center; font-size: 1.3rem; font-weight: 800; color: #fff; flex-shrink: 0;
+}
+.agent-name { font-size: 1.2rem; font-weight: 700; }
+.agent-role { font-size: 0.82rem; color: var(--text-muted); font-weight: 500; }
+.agent-tag {
+  display: inline-block; font-size: 0.7rem; font-weight: 700; padding: 3px 10px;
+  border-radius: 20px; letter-spacing: 0.05em; text-transform: uppercase; margin-top: 4px;
+}
+
+.agent-desc { color: var(--text-dim); font-size: 0.95rem; line-height: 1.6; margin-bottom: 16px; }
+
+.agent-skills { list-style: none; display: flex; flex-direction: column; gap: 6px; }
+.agent-skills li {
+  display: flex; align-items: flex-start; gap: 10px;
+  font-size: 0.9rem; color: var(--text-muted); line-height: 1.5;
+}
+.agent-skills li::before { content: '\2192'; color: var(--gold); font-weight: 700; flex-shrink: 0; }
+
+/* ============ SCENARIOS ============ */
+.scenarios-list { display: flex; flex-direction: column; gap: 16px; margin-top: 32px; }
+
+.scenario-card {
+  border: 1px solid var(--border); border-radius: 16px; overflow: hidden; background: var(--surface);
+}
+.scenario-card summary {
+  display: flex; align-items: center; gap: 16px; padding: 24px 28px;
+  cursor: pointer; list-style: none; user-select: none; transition: background 0.2s;
+}
+.scenario-card summary::-webkit-details-marker { display: none; }
+.scenario-card summary::marker { display: none; content: ''; }
+.scenario-card summary:hover { background: rgba(255,255,255,0.015); }
+
+.scenario-time { font-size: 0.8rem; font-weight: 700; color: var(--gold); background: var(--gold-glow); padding: 4px 12px; border-radius: 20px; flex-shrink: 0; white-space: nowrap; }
+.scenario-title { flex: 1; font-size: 1.05rem; font-weight: 600; }
+.scenario-agents { font-size: 0.82rem; color: var(--text-muted); flex-shrink: 0; }
+.scenario-chevron { color: var(--text-muted); transition: transform 0.3s; }
+.scenario-card[open] .scenario-chevron { transform: rotate(180deg); }
+.scenario-card[open] summary { border-bottom: 1px solid var(--border); }
+
+.scenario-expanded {
+  padding: 22px; animation: fadeIn 0.3s ease;
+}
+@keyframes fadeIn { from { opacity: 0; transform: translateY(-6px); } to { opacity: 1; transform: translateY(0); } }
+
+.scenario-flow {
+  display: flex; flex-direction: column; gap: 16px;
+}
+.scenario-step {
+  display: flex; gap: 16px; align-items: flex-start;
+}
+.scenario-step-dot {
+  width: 10px; height: 10px; border-radius: 50%; margin-top: 7px; flex-shrink: 0;
+}
+.scenario-step-content { flex: 1; }
+.scenario-step-who { font-size: 0.82rem; font-weight: 700; margin-bottom: 4px; }
+.scenario-step-what { font-size: 0.92rem; color: var(--text-dim); line-height: 1.6; }
+
+/* ============ ROI ============ */
+.roi { background: var(--black-light); }
+.roi-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; margin-top: 32px; }
+@media (max-width: 768px) { .roi-grid { grid-template-columns: 1fr; } }
+
+.roi-card {
+  background: var(--surface); border: 1px solid var(--border); border-radius: 16px;
+  padding: 24px 22px; text-align: center; transition: all 0.3s;
+}
+.roi-card:hover { border-color: rgba(245, 158, 11, 0.2); transform: translateY(-2px); }
+.roi-card.highlight { border-color: var(--gold); background: linear-gradient(180deg, rgba(245, 158, 11, 0.05), var(--surface) 60%); grid-column: 1 / -1; }
+
+.roi-value {
+  font-family: 'Playfair Display', serif; font-size: 2.5rem; font-weight: 900;
+  color: var(--gold); line-height: 1; margin-bottom: 8px;
+  text-shadow: 0 0 40px var(--gold-glow);
+}
+.roi-label { font-size: 0.95rem; color: var(--text-muted); }
+
+/* ============ COMPARISON TABLE ============ */
+.comparison { margin-top: 36px; overflow-x: auto; }
+.comparison table {
+  width: 100%; border-collapse: collapse; font-size: 0.92rem;
+}
+.comparison th {
+  text-align: left; padding: 14px 20px; font-weight: 700; font-size: 0.8rem;
+  letter-spacing: 0.1em; text-transform: uppercase; color: var(--text-muted);
+  border-bottom: 2px solid var(--border);
+}
+.comparison td {
+  padding: 14px 20px; border-bottom: 1px solid var(--border); color: var(--text-dim);
+}
+.comparison tr:hover td { background: rgba(255,255,255,0.01); }
+.comparison .val-bad { color: var(--red); font-weight: 600; }
+.comparison .val-good { color: var(--green); font-weight: 600; }
+
+/* ============ MEETING ============ */
+.meeting-card {
+  background: var(--surface); border: 1px solid var(--border); border-left: 4px solid var(--gold);
+  border-radius: 16px; padding: 24px; margin-top: 32px;
+}
+.meeting-header { font-weight: 700; color: var(--gold); font-size: 0.95rem; margin-bottom: 20px; display: flex; align-items: center; gap: 10px; }
+.meeting-messages { display: flex; flex-direction: column; gap: 12px; }
+.meeting-msg {
+  display: flex; gap: 12px; align-items: flex-start;
+  font-size: 0.9rem; color: var(--text-dim); line-height: 1.5;
+}
+.meeting-msg-from { font-weight: 700; color: var(--text); white-space: nowrap; min-width: 120px; flex-shrink: 0; }
+
+/* ============ CTA SECTION ============ */
+.cta-section {
+  text-align: center; padding: 100px 24px; position: relative; overflow: hidden;
+}
+.cta-section::before {
+  content: ''; position: absolute; top: 0; left: 0; right: 0;
+  height: 1px; background: linear-gradient(90deg, transparent, var(--gold), transparent);
+}
+.cta-buttons { display: flex; justify-content: center; gap: 16px; flex-wrap: wrap; margin-top: 40px; }
+.cta-note { color: var(--text-muted); font-size: 0.9rem; margin-top: 24px; }
+
+/* ============ BREADCRUMB ============ */
+.breadcrumb { font-size: 0.82rem; color: var(--text-muted); margin-bottom: 8px; }
+.breadcrumb a { color: var(--gold); }
+.breadcrumb a:hover { text-decoration: underline; }
+
+/* ============ FOOTER ============ */
+.footer { text-align: center; padding: 40px 24px; color: var(--text-muted); font-size: 0.82rem; border-top: 1px solid var(--border); }
+
+/* ============ NOISE ============ */
+body::after {
+  content: ''; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+  opacity: 0.012; pointer-events: none; z-index: 9999;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+@media print {
+  .navbar { display: none; }
+  body::after { display: none; }
+  section { padding: 32px 0; break-inside: avoid; }
+  * { color: #000 !important; background: #fff !important; }
+}
+</style>
+</head>
+<body>
+
+<!-- NAVBAR -->
+<nav class="navbar">
+  <div class="navbar-logo">
+    <div class="navbar-logo-icon">A</div>
+    <span>Aurelius IA</span>
+  </div>
+  <div class="navbar-links">
+    <a href="apresentacao.html" class="navbar-back">&larr; Todos os segmentos</a>
+    <a href="https://aurelius.ia.br" class="btn-primary" style="padding: 10px 24px; font-size: 0.85rem;">Testar grátis &rarr;</a>
+  </div>
+</nav>
+
+<!-- ============ HERO ============ -->
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="container hero-content">
+    <div class="breadcrumb"><a href="apresentacao.html">Aurelius IA</a> / Saúde</div>
+    <div class="hero-badge">&#127973; Clínicas &amp; Consultórios</div>
+    <h1>25% dos seus pacientes faltam.<br>Cada falta custa <span class="gold">R$300.</span></h1>
+    <p class="hero-subtitle">
+      Paciente marca, esquece, não confirma, cancela em cima da hora. Recepcionista gasta o dia inteiro no WhatsApp confirmando consulta. E se uma equipe digital fizesse tudo isso — e ainda reativasse pacientes que sumiram?
+    </p>
+    <div class="hero-ctas">
+      <a href="https://aurelius.ia.br" class="btn-primary">Testar grátis 7 dias &rarr;</a>
+      <a href="#equipe" class="btn-secondary">Ver a equipe digital &darr;</a>
+    </div>
+  </div>
+</section>
+
+<!-- ============ THE PAIN ============ -->
+<section class="pain">
+  <div class="container">
+    <div class="section-label">O Dia a Dia</div>
+    <h2 class="section-title">Cadeira vazia, agenda cheia no papel.<br><span class="gold">Caos real</span> no consultório.</h2>
+    <p class="pain-intro">Uma clínica com 50 consultas/semana perde pelo menos 12 por falta. São R$3.600/semana evaporando — sem contar reativação zero e recepcionista sobrecarregada.</p>
+    <div class="pain-grid">
+      <div class="pain-card">
+        <div class="pain-icon">&#128683;</div>
+        <h3>25% de faltas</h3>
+        <p>1 em 4 pacientes não aparece. Cadeira vazia = R$300 perdidos por consulta.</p>
+      </div>
+      <div class="pain-card">
+        <div class="pain-icon">&#128241;</div>
+        <h3>Recepcionista no WhatsApp</h3>
+        <p>50% dos contatos chegam pelo WhatsApp. Recepcionista vira atendente digital o dia todo.</p>
+      </div>
+      <div class="pain-card">
+        <div class="pain-icon">&#128260;</div>
+        <h3>Cancela e não remarca</h3>
+        <p>Paciente cancela e some. Sem remarcação automática, sem reativação.</p>
+      </div>
+      <div class="pain-card">
+        <div class="pain-icon">&#128203;</div>
+        <h3>Pós-consulta zero</h3>
+        <p>Paciente sai, não volta pra retorno de 6 meses. Ninguém lembra.</p>
+      </div>
+      <div class="pain-card">
+        <div class="pain-icon">&#128138;</div>
+        <h3>Dúvidas pós-operatório</h3>
+        <p>"Tomo o remédio antes ou depois de comer?" — ligam 3x/semana pra recepcionista.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ THE TEAM ============ -->
+<section id="equipe">
+  <div class="container">
+    <div class="section-label">A Equipe Digital</div>
+    <h2 class="section-title">4 agentes especializados.<br>Cada um com <span class="gold">tom, conhecimento e função</span> próprios.</h2>
+    <div class="team-grid">
+
+      <div class="agent-card">
+        <div class="agent-header">
+          <div class="agent-avatar" style="background: #3B82F6;">C</div>
+          <div>
+            <div class="agent-name">Clara</div>
+            <div class="agent-role">Agendamento + FAQ</div>
+            <span class="agent-tag" style="background: var(--blue-dim); color: var(--blue);">Recepção</span>
+          </div>
+        </div>
+        <p class="agent-desc">Acolhedora, organizada, paciente. Agenda consultas 24h por WhatsApp, responde dúvidas sobre convênios, preparos, localização e estacionamento. Encaixa cancelamentos oferecendo horário pra fila de espera.</p>
+        <ul class="agent-skills">
+          <li>Agendamento inteligente 24h por WhatsApp</li>
+          <li>FAQ médico: convênios, preparos, localização, estacionamento</li>
+          <li>Gestão de fila de espera com encaixe automático</li>
+          <li>Cancelou? Clara oferece o horário pra quem está na fila</li>
+        </ul>
+      </div>
+
+      <div class="agent-card">
+        <div class="agent-header">
+          <div class="agent-avatar" style="background: #F59E0B;">E</div>
+          <div>
+            <div class="agent-name">Eva</div>
+            <div class="agent-role">Porteiro Inteligente</div>
+            <span class="agent-tag" style="background: var(--gold-glow); color: var(--gold);">Triagem</span>
+          </div>
+        </div>
+        <p class="agent-desc">Rápida, precisa, invisível. Classifica cada mensagem que chega e direciona pro agente certo — sem o paciente perceber.</p>
+        <ul class="agent-skills">
+          <li>Agendamento novo → Clara</li>
+          <li>Confirmação de consulta → Renata</li>
+          <li>Dúvida pós-consulta → Agente de orientação</li>
+          <li>Urgência → Alerta direto pro médico</li>
+        </ul>
+      </div>
+
+      <div class="agent-card">
+        <div class="agent-header">
+          <div class="agent-avatar" style="background: #22C55E;">R</div>
+          <div>
+            <div class="agent-name">Renata</div>
+            <div class="agent-role">Confirmação + Reativação</div>
+            <span class="agent-tag" style="background: var(--green-dim); color: var(--green);">Follow-up</span>
+          </div>
+        </div>
+        <p class="agent-desc">Persistente, gentil, estratégica. Cadeia de confirmação em 3 etapas, reativação de inativos e lembrete de retorno periódico. Nenhum paciente some sem aviso.</p>
+        <ul class="agent-skills">
+          <li>7 dias antes: primeiro lembrete</li>
+          <li>24h antes: "Sua consulta é amanhã às 14h. Confirma?"</li>
+          <li>2h antes: "Faltam 2h para sua consulta"</li>
+          <li>Não confirmou? Tenta reagendar + oferece horário pra fila</li>
+          <li>Retorno 6 meses: "Olá Maria, hora do retorno com Dr. Silva"</li>
+          <li>Reativação 60+ dias: mensagem personalizada</li>
+        </ul>
+      </div>
+
+      <div class="agent-card">
+        <div class="agent-header">
+          <div class="agent-avatar" style="background: #8B5CF6;">Dr</div>
+          <div>
+            <div class="agent-name">Dr. Fiscal</div>
+            <div class="agent-role">Analista de Documentos (Interno)</div>
+            <span class="agent-tag" style="background: rgba(139, 92, 246, 0.1); color: #8B5CF6;">Documentos</span>
+          </div>
+        </div>
+        <p class="agent-desc">Não tem WhatsApp próprio — trabalha nos bastidores. Quando qualquer agente recebe foto ou PDF, ele analisa via visão computacional e devolve dados estruturados.</p>
+        <ul class="agent-skills">
+          <li>Foto de receita → extrai medicação, dosagem e posologia</li>
+          <li>Resultado de exame → agenda retorno automático</li>
+          <li>Guia de convênio → valida dados do paciente</li>
+        </ul>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ============ SCENARIOS ============ -->
+<section style="background: var(--black-light);">
+  <div class="container">
+    <div class="section-label">Cenários Reais</div>
+    <h2 class="section-title">Veja como a equipe resolve <span class="gold">situações do dia a dia.</span></h2>
+    <div class="scenarios-list">
+
+      <details class="scenario-card">
+        <summary>
+          <span class="scenario-time">08:00</span>
+          <span class="scenario-title">12 consultas agendadas, 3 não confirmaram</span>
+          <span class="scenario-agents">Renata + Clara</span>
+          <span class="scenario-chevron">&#9660;</span>
+        </summary>
+        <div class="scenario-expanded">
+          <div class="scenario-flow">
+            <div class="scenario-step">
+              <div class="scenario-step-dot" style="background: #22C55E;"></div>
+              <div class="scenario-step-content">
+                <div class="scenario-step-who" style="color: #4ADE80;">Renata (Follow-up)</div>
+                <div class="scenario-step-what">Detecta 3 pacientes sem confirmação. Envia lembrete personalizado pra cada um: "Bom dia, Ana! Sua consulta com Dra. Silva é hoje às 10h. Confirma? Se precisar remarcar, é só avisar."</div>
+              </div>
+            </div>
+            <div class="scenario-step">
+              <div class="scenario-step-dot" style="background: #22C55E;"></div>
+              <div class="scenario-step-content">
+                <div class="scenario-step-who" style="color: #4ADE80;">Renata (Follow-up)</div>
+                <div class="scenario-step-what">2 confirmam em 15 minutos. 1 cancela: "Não vou conseguir ir hoje." Renata responde: "Sem problema! Quer remarcar pra esta semana?" e avisa Clara.</div>
+              </div>
+            </div>
+            <div class="scenario-step">
+              <div class="scenario-step-dot" style="background: #3B82F6;"></div>
+              <div class="scenario-step-content">
+                <div class="scenario-step-who" style="color: #60A5FA;">Clara (Recepção)</div>
+                <div class="scenario-step-what">Recebe aviso do cancelamento. Consulta fila de espera: "Sr. Carlos, abriu um horário às 10h hoje. Deseja agendar?" Carlos confirma em 2 minutos. Horário preenchido.</div>
+              </div>
+            </div>
+            <div class="scenario-step">
+              <div class="scenario-step-dot" style="background: var(--gold);"></div>
+              <div class="scenario-step-content">
+                <div class="scenario-step-who" style="color: var(--gold);">Resultado</div>
+                <div class="scenario-step-what">Zero cadeiras vazias. R$300 salvos. Recepcionista não precisou pegar o telefone.</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </details>
+
+      <details class="scenario-card">
+        <summary>
+          <span class="scenario-time">10:30</span>
+          <span class="scenario-title">Paciente pergunta sobre preparo pra exame</span>
+          <span class="scenario-agents">Clara</span>
+          <span class="scenario-chevron">&#9660;</span>
+        </summary>
+        <div class="scenario-expanded">
+          <div class="scenario-flow">
+            <div class="scenario-step">
+              <div class="scenario-step-dot" style="background: #3B82F6;"></div>
+              <div class="scenario-step-content">
+                <div class="scenario-step-who" style="color: #60A5FA;">Clara (Recepção)</div>
+                <div class="scenario-step-what">Paciente manda: "Oi, tenho exame de sangue amanhã. Preciso de jejum?" Clara responde instantaneamente: "Sim! Jejum de 8 horas, não tome café, e traga o pedido médico. Nosso horário de coleta é das 7h às 10h."</div>
+              </div>
+            </div>
+            <div class="scenario-step">
+              <div class="scenario-step-dot" style="background: #3B82F6;"></div>
+              <div class="scenario-step-content">
+                <div class="scenario-step-who" style="color: #60A5FA;">Clara (Recepção)</div>
+                <div class="scenario-step-what">Paciente pergunta: "Aceita convênio Unimed?" Clara confirma: "Sim, aceitamos Unimed, Bradesco Saúde e SulAmérica. Traga a carteirinha atualizada."</div>
+              </div>
+            </div>
+            <div class="scenario-step">
+              <div class="scenario-step-dot" style="background: var(--gold);"></div>
+              <div class="scenario-step-content">
+                <div class="scenario-step-who" style="color: var(--gold);">Resultado</div>
+                <div class="scenario-step-what">Dúvida resolvida em 30 segundos. Recepcionista livre pra atender quem está no balcão. Paciente satisfeito com resposta imediata.</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </details>
+
+      <details class="scenario-card">
+        <summary>
+          <span class="scenario-time">14:00</span>
+          <span class="scenario-title">Pós-operatório: paciente com dúvida sobre medicação</span>
+          <span class="scenario-agents">Eva → Agente Docs</span>
+          <span class="scenario-chevron">&#9660;</span>
+        </summary>
+        <div class="scenario-expanded">
+          <div class="scenario-flow">
+            <div class="scenario-step">
+              <div class="scenario-step-dot" style="background: #F59E0B;"></div>
+              <div class="scenario-step-content">
+                <div class="scenario-step-who" style="color: var(--gold);">Eva (Triagem)</div>
+                <div class="scenario-step-what">Paciente manda: "Fiz cirurgia segunda, posso tomar o anti-inflamatório antes ou depois de comer?" Eva classifica como dúvida pós-consulta e aciona o agente de orientação.</div>
+              </div>
+            </div>
+            <div class="scenario-step">
+              <div class="scenario-step-dot" style="background: #8B5CF6;"></div>
+              <div class="scenario-step-content">
+                <div class="scenario-step-who" style="color: #A78BFA;">Dr. Fiscal (Documentos)</div>
+                <div class="scenario-step-what">Consulta a prescrição do paciente. Responde: "Com base na sua prescrição, tome o anti-inflamatório após as refeições, com bastante água. Se tiver dor forte ou febre, agende retorno com o Dr. Mendes."</div>
+              </div>
+            </div>
+            <div class="scenario-step">
+              <div class="scenario-step-dot" style="background: var(--gold);"></div>
+              <div class="scenario-step-content">
+                <div class="scenario-step-who" style="color: var(--gold);">Resultado</div>
+                <div class="scenario-step-what">Paciente atendido em 1 minuto. Sem ligar pra clínica. Sem ocupar recepcionista. Médico não foi interrompido no meio de outra consulta.</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </details>
+
+      <details class="scenario-card">
+        <summary>
+          <span class="scenario-time">Automático</span>
+          <span class="scenario-title">45 pacientes com retorno vencido há 6+ meses</span>
+          <span class="scenario-agents">Heartbeat → Renata</span>
+          <span class="scenario-chevron">&#9660;</span>
+        </summary>
+        <div class="scenario-expanded">
+          <div class="scenario-flow">
+            <div class="scenario-step">
+              <div class="scenario-step-dot" style="background: #F59E0B;"></div>
+              <div class="scenario-step-content">
+                <div class="scenario-step-who" style="color: var(--gold);">Heartbeat (Proativo)</div>
+                <div class="scenario-step-what">Verifica automaticamente: 45 pacientes com retorno vencido há mais de 6 meses. Dispara campanha de reativação via Renata.</div>
+              </div>
+            </div>
+            <div class="scenario-step">
+              <div class="scenario-step-dot" style="background: #22C55E;"></div>
+              <div class="scenario-step-content">
+                <div class="scenario-step-who" style="color: #4ADE80;">Renata (Follow-up)</div>
+                <div class="scenario-step-what">Envia mensagem personalizada pra cada um: "Olá Maria, faz 6 meses desde sua última consulta com Dra. Silva. Hora do retorno! Temos horário quinta às 15h. Deseja agendar?"</div>
+              </div>
+            </div>
+            <div class="scenario-step">
+              <div class="scenario-step-dot" style="background: #3B82F6;"></div>
+              <div class="scenario-step-content">
+                <div class="scenario-step-who" style="color: #60A5FA;">Clara (Recepção)</div>
+                <div class="scenario-step-what">12 pacientes respondem querendo agendar. Clara encaixa cada um nos horários disponíveis automaticamente.</div>
+              </div>
+            </div>
+            <div class="scenario-step">
+              <div class="scenario-step-dot" style="background: var(--gold);"></div>
+              <div class="scenario-step-content">
+                <div class="scenario-step-who" style="color: var(--gold);">Resultado</div>
+                <div class="scenario-step-what">12 retornos agendados = R$3.600 em receita recuperada. Pacientes que tinham sumido voltam com uma mensagem. Sem esforço da recepção.</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </details>
+
+    </div>
+  </div>
+</section>
+
+<!-- ============ MEETING ============ -->
+<section>
+  <div class="container">
+    <div class="section-label">Reunião Entre Agentes</div>
+    <h2 class="section-title">Seus agentes conversam entre si.<br><span class="gold">Automaticamente.</span></h2>
+    <p style="color: var(--text-dim); max-width: 700px; margin-bottom: 8px; font-size: 1.05rem; line-height: 1.7;">Uma vez por dia, os agentes fazem uma reunião e compartilham informações. Sem você pedir. Veja um exemplo real:</p>
+    <div class="meeting-card">
+      <div class="meeting-header">&#128203; Reunião das 12h — Resumo</div>
+      <div class="meeting-messages">
+        <div class="meeting-msg"><span class="meeting-msg-from" style="color: #60A5FA;">Clara → Renata:</span> 3 cancelamentos hoje. 2 encaixados da fila, 1 horário vago às 16h.</div>
+        <div class="meeting-msg"><span class="meeting-msg-from" style="color: #4ADE80;">Renata → Clara:</span> 45 pacientes com retorno vencido. Disparei reativação, 12 agendaram.</div>
+        <div class="meeting-msg"><span class="meeting-msg-from" style="color: var(--gold);">Supervisor → Dra. Silva:</span> Taxa de faltas esta semana: 5% (meta era 10%). Padrão: terça-feira tem mais faltas.</div>
+        <div class="meeting-msg"><span class="meeting-msg-from" style="color: #4ADE80;">Renata → Todos:</span> Paciente José não confirmou 3x seguidas. Padrão de cancelamento — oferecer horário fixo diferente.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ ROI ============ -->
+<section class="roi">
+  <div class="container">
+    <div class="section-label">O Retorno</div>
+    <h2 class="section-title">Cadeiras vazias viram <span class="gold">receita.</span><br>ROI no dia 1.</h2>
+    <div class="roi-grid">
+      <div class="roi-card">
+        <div class="roi-value">5%</div>
+        <div class="roi-label">Taxa de faltas<br><small style="color: var(--text-muted);">(era 25%)</small></div>
+      </div>
+      <div class="roi-card">
+        <div class="roi-value">+53%</div>
+        <div class="roi-label">Aumento na receita mensal</div>
+      </div>
+      <div class="roi-card">
+        <div class="roi-value">70%</div>
+        <div class="roi-label">Retorno voluntário<br><small style="color: var(--text-muted);">(era 40%)</small></div>
+      </div>
+      <div class="roi-card">
+        <div class="roi-value">24/7</div>
+        <div class="roi-label">Agendamento sem recepcionista</div>
+      </div>
+      <div class="roi-card highlight">
+        <div class="roi-value" style="font-size: 3.2rem;">R$23K/mês</div>
+        <div class="roi-label" style="font-size: 1.1rem; color: var(--text);">Receita com 50 consultas/semana (era R$15K)</div>
+      </div>
+    </div>
+
+    <!-- COMPARISON TABLE -->
+    <div class="comparison">
+      <h3 style="font-size: 1.3rem; font-weight: 700; margin-bottom: 24px; margin-top: 40px;">Antes vs. Depois — Com Aurelius IA</h3>
+      <table>
+        <thead>
+          <tr><th>Métrica</th><th>Antes</th><th>Com Aurelius</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Taxa de faltas</td><td class="val-bad">25%</td><td class="val-good">5%</td></tr>
+          <tr><td>Receita/mês (50 consultas)</td><td class="val-bad">R$15K</td><td class="val-good">R$23K (+53%)</td></tr>
+          <tr><td>Retorno voluntário</td><td class="val-bad">40%</td><td class="val-good">70%</td></tr>
+          <tr><td>Tempo recepcionista no WhatsApp</td><td class="val-bad">6h/dia</td><td class="val-good">1h/dia</td></tr>
+          <tr><td>Paciente reativado</td><td class="val-bad">10%</td><td class="val-good">45%</td></tr>
+          <tr><td>Dúvida pós-consulta → liga</td><td class="val-bad">3x/semana</td><td class="val-good">0 (IA responde)</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<!-- ============ CTA ============ -->
+<section class="cta-section">
+  <div class="container">
+    <h2 class="section-title">Pronto pra acabar com <span class="gold">cadeiras vazias?</span></h2>
+    <div class="cta-buttons">
+      <a href="https://aurelius.ia.br" class="btn-primary" style="padding: 18px 40px; font-size: 1.1rem;">Começar agora — 7 dias grátis &rarr;</a>
+      <a href="https://wa.me/5541984520339" class="btn-secondary">Falar com consultor</a>
+    </div>
+    <p class="cta-note">Sem cartão de crédito. Setup em 5 minutos. Cancele quando quiser.</p>
+  </div>
+</section>
+
+<footer class="footer">&copy; 2026 Aurelius IA &middot; aurelius.ia.br</footer>
+
+</body>
+</html>

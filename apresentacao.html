@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Aurelius IA — Sua Equipe Digital no WhatsApp</title>
+<meta name="description" content="Equipe digital de IA que cuida do seu WhatsApp, filtra o caos, e te avisa só o que importa. Teste grátis 7 dias.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=Playfair+Display:ital,wght@0,700;0,800;0,900;1,700&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --black:#050508;--black-light:#0a0a10;--surface:#0f0f18;--surface-2:#16161f;
+  --border:#1e1e2a;--border-light:#2a2a3a;
+  --gold:#F59E0B;--gold-dim:#D97706;--gold-glow:rgba(245,158,11,.15);--gold-glow-strong:rgba(245,158,11,.3);
+  --text:#F1F5F9;--text-dim:#94A3B8;--text-muted:#64748B;
+  --green:#22C55E;
+}
+html{scroll-behavior:smooth;background:var(--black);color:var(--text);font-family:'Outfit',sans-serif;font-size:16px;line-height:1.6;-webkit-font-smoothing:antialiased}
+body{background:var(--black);overflow-x:hidden}
+a{color:inherit;text-decoration:none}
+
+.container{max-width:1140px;margin:0 auto;padding:0 24px}
+
+/* NAV */
+.nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:14px 24px;display:flex;align-items:center;justify-content:space-between;background:rgba(5,5,8,.92);backdrop-filter:blur(16px);border-bottom:1px solid rgba(245,158,11,.06)}
+.nav-logo{display:flex;align-items:center;gap:10px;font-weight:800;font-size:1.15rem}
+.nav-icon{width:32px;height:32px;background:var(--gold);border-radius:7px;display:flex;align-items:center;justify-content:center;font-weight:900;color:var(--black)}
+.nav-links{display:flex;align-items:center;gap:20px}
+.nav-links a{font-size:.88rem;color:var(--text-dim);font-weight:500;transition:color .2s}
+.nav-links a:hover{color:var(--text)}
+.btn{display:inline-flex;align-items:center;gap:8px;padding:11px 26px;font-weight:700;font-size:.9rem;border-radius:10px;border:none;cursor:pointer;transition:all .2s}
+.btn-gold{background:var(--gold);color:var(--black)}
+.btn-gold:hover{background:#FBBF24;box-shadow:0 6px 24px var(--gold-glow-strong)}
+.btn-outline{background:transparent;color:var(--text);border:1px solid var(--border-light)}
+.btn-outline:hover{border-color:var(--gold);color:var(--gold)}
+
+/* HERO */
+.hero{min-height:60vh;display:flex;align-items:center;padding:100px 0 48px;text-align:center;position:relative}
+.hero-bg{position:absolute;inset:0;background:radial-gradient(ellipse 500px 400px at 50% 40%,rgba(245,158,11,.05),transparent 70%)}
+.hero-content{position:relative;z-index:1;max-width:780px;margin:0 auto;padding:0 24px}
+.hero h1{font-family:'Playfair Display',serif;font-size:clamp(2rem,5.5vw,3.8rem);font-weight:900;line-height:1.1;letter-spacing:-.02em;margin-bottom:20px}
+.hero h1 .gold{color:var(--gold)}
+.hero-sub{font-size:clamp(1rem,2vw,1.2rem);color:var(--text-dim);max-width:600px;margin:0 auto 32px;line-height:1.65}
+.hero-ctas{display:flex;justify-content:center;gap:14px;flex-wrap:wrap}
+.hero-line{width:48px;height:3px;background:linear-gradient(90deg,transparent,var(--gold),transparent);margin:0 auto 24px;border-radius:2px}
+
+/* SEGMENT GRID — the main event */
+.seg{padding:56px 0 72px;background:var(--black-light)}
+.seg-label{font-size:.76rem;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:var(--gold);text-align:center;margin-bottom:8px}
+.seg-title{font-family:'Playfair Display',serif;font-size:clamp(1.6rem,4vw,2.6rem);font-weight:800;text-align:center;margin-bottom:40px;letter-spacing:-.01em}
+.seg-title .gold{color:var(--gold)}
+
+.seg-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+@media(max-width:900px){.seg-grid{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:550px){.seg-grid{grid-template-columns:1fr}}
+
+.seg-card{background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:24px 22px;display:flex;align-items:flex-start;gap:16px;transition:all .25s;position:relative;overflow:hidden}
+.seg-card:hover{border-color:var(--gold-dim);transform:translateY(-3px);box-shadow:0 12px 40px rgba(245,158,11,.08)}
+.seg-card::after{content:'→';position:absolute;right:20px;top:50%;transform:translateY(-50%);color:var(--gold);font-size:1.1rem;opacity:0;transition:opacity .2s}
+.seg-card:hover::after{opacity:1}
+
+.seg-emoji{font-size:2rem;width:52px;height:52px;background:var(--surface-2);border-radius:12px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.seg-info h3{font-size:1.05rem;font-weight:700;margin-bottom:4px}
+.seg-info p{font-size:.85rem;color:var(--text-muted);line-height:1.45}
+.seg-roi{font-size:.72rem;font-weight:700;color:var(--green);background:rgba(34,197,94,.08);padding:3px 10px;border-radius:20px;margin-top:8px;display:inline-block}
+
+/* HOW IT WORKS — compact */
+.how{padding:56px 0}
+.how-title{font-family:'Playfair Display',serif;font-size:clamp(1.4rem,3.5vw,2.2rem);font-weight:800;text-align:center;margin-bottom:36px}
+.how-title .gold{color:var(--gold)}
+.how-steps{display:grid;grid-template-columns:repeat(4,1fr);gap:20px}
+@media(max-width:700px){.how-steps{grid-template-columns:repeat(2,1fr)}}
+.how-step{text-align:center;padding:24px 16px}
+.how-num{font-family:'Playfair Display',serif;font-size:2.2rem;font-weight:900;color:var(--gold);line-height:1;margin-bottom:12px}
+.how-step h4{font-size:.95rem;font-weight:700;margin-bottom:6px}
+.how-step p{font-size:.85rem;color:var(--text-muted);line-height:1.5}
+
+/* PLANS — compact */
+.plans{padding:56px 0;background:var(--black-light)}
+.plans-title{font-family:'Playfair Display',serif;font-size:clamp(1.4rem,3.5vw,2.2rem);font-weight:800;text-align:center;margin-bottom:36px}
+.plans-title .gold{color:var(--gold)}
+.plans-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;max-width:960px;margin:0 auto}
+@media(max-width:800px){.plans-grid{grid-template-columns:1fr;max-width:400px}}
+
+.plan{background:var(--surface);border:1px solid var(--border);border-radius:18px;padding:28px 24px;position:relative;transition:all .25s}
+.plan:hover{transform:translateY(-3px);border-color:var(--border-light)}
+.plan.pop{border-color:var(--gold);background:linear-gradient(180deg,rgba(245,158,11,.05),var(--surface) 40%)}
+.plan-badge{position:absolute;top:-12px;left:50%;transform:translateX(-50%);background:var(--gold);color:var(--black);font-size:.7rem;font-weight:800;padding:5px 18px;border-radius:20px;letter-spacing:.08em;text-transform:uppercase;white-space:nowrap}
+.plan-name{font-size:1.1rem;font-weight:800;text-transform:uppercase;letter-spacing:.04em;margin-bottom:6px}
+.plan-price{font-family:'Playfair Display',serif;font-size:2.4rem;font-weight:900;color:var(--gold);line-height:1;margin-bottom:2px}
+.plan-period{font-size:.85rem;color:var(--text-muted);margin-bottom:20px}
+.plan-list{list-style:none;display:flex;flex-direction:column;gap:10px;margin-bottom:24px}
+.plan-list li{display:flex;align-items:center;gap:10px;font-size:.88rem;color:var(--text-dim)}
+.plan-list li::before{content:'✓';color:var(--green);font-weight:700;flex-shrink:0}
+.plan-cta{display:block;text-align:center;padding:13px 20px;border-radius:12px;font-weight:700;font-size:.9rem;transition:all .2s}
+.plan-cta.gold{background:var(--gold);color:var(--black)}
+.plan-cta.gold:hover{background:#FBBF24;box-shadow:0 6px 24px var(--gold-glow-strong)}
+.plan-cta.ghost{border:1px solid var(--border-light);color:var(--text)}
+.plan-cta.ghost:hover{border-color:var(--gold);color:var(--gold)}
+.plans-note{text-align:center;margin-top:20px;color:var(--text-muted);font-size:.88rem}
+
+/* FOOTER CTA */
+.fcta{text-align:center;padding:64px 24px;position:relative}
+.fcta::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,var(--gold),transparent)}
+.fcta h2{font-family:'Playfair Display',serif;font-size:clamp(1.5rem,4vw,2.4rem);font-weight:800;margin-bottom:28px}
+.fcta h2 .gold{color:var(--gold)}
+.fcta-btns{display:flex;justify-content:center;gap:14px;flex-wrap:wrap;margin-bottom:20px}
+.fcta-note{color:var(--text-muted);font-size:.85rem}
+.footer{text-align:center;padding:28px 24px;color:var(--text-muted);font-size:.8rem;border-top:1px solid var(--border)}
+
+/* NOISE */
+body::after{content:'';position:fixed;inset:0;opacity:.012;pointer-events:none;z-index:9999;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
+@media print{.nav{display:none}body::after{display:none}*{color:#000!important;background:#fff!important}}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="nav">
+  <div class="nav-logo"><div class="nav-icon">A</div> Aurelius IA</div>
+  <div class="nav-links">
+    <a href="#segmentos">Segmentos</a>
+    <a href="#planos">Planos</a>
+    <a href="https://aurelius.ia.br" class="btn btn-gold">Testar grátis →</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-content">
+    <div class="hero-line"></div>
+    <h1>Seu WhatsApp cuida do negócio.<br><span class="gold">Sua equipe digital</span> cuida do WhatsApp.</h1>
+    <p class="hero-sub">Agentes de IA especializados que atendem, qualificam, agendam e fazem follow-up — 24h por dia. Você recebe só o que precisa de atenção.</p>
+    <div class="hero-ctas">
+      <a href="#segmentos" class="btn btn-outline">Encontre seu segmento ↓</a>
+      <a href="https://aurelius.ia.br" class="btn btn-gold">Testar grátis 7 dias →</a>
+    </div>
+  </div>
+</section>
+
+<!-- SEGMENTS — the main event -->
+<section class="seg" id="segmentos">
+  <div class="container">
+    <div class="seg-label">Casos de Uso</div>
+    <h2 class="seg-title">Qual é o seu <span class="gold">ramo?</span></h2>
+    <div class="seg-grid">
+
+      <a href="caso-contabilidade.html" class="seg-card">
+        <div class="seg-emoji">🏢</div>
+        <div class="seg-info">
+          <h3>Contabilidade</h3>
+          <p>6 frentes no WhatsApp, zero controle. 5 agentes especializados resolvem.</p>
+          <span class="seg-roi">ROI: R$9.303/mês</span>
+        </div>
+      </a>
+
+      <a href="caso-imobiliaria.html" class="seg-card">
+        <div class="seg-emoji">🏠</div>
+        <div class="seg-info">
+          <h3>Imobiliária</h3>
+          <p>20% dos leads nunca recebem resposta. Aurelius responde em 60 segundos.</p>
+          <span class="seg-roi">+110% faturamento</span>
+        </div>
+      </a>
+
+      <a href="caso-aluguel.html" class="seg-card">
+        <div class="seg-emoji">🏘️</div>
+        <div class="seg-info">
+          <h3>Aluguel de Imóveis</h3>
+          <p>16 mensagens/dia, 6 assuntos. Equipe digital separa tudo.</p>
+          <span class="seg-roi">4h/dia recuperadas</span>
+        </div>
+      </a>
+
+      <a href="caso-advocacia.html" class="seg-card">
+        <div class="seg-emoji">⚖️</div>
+        <div class="seg-info">
+          <h3>Advocacia</h3>
+          <p>80% do tempo é triagem. IA qualifica e entrega o caso pronto.</p>
+          <span class="seg-roi">+140% eficiência</span>
+        </div>
+      </a>
+
+      <a href="caso-ecommerce.html" class="seg-card">
+        <div class="seg-emoji">🛒</div>
+        <div class="seg-info">
+          <h3>E-commerce</h3>
+          <p>75% de carrinho abandonado. IA recupera e converte no WhatsApp.</p>
+          <span class="seg-roi">+80% recuperação</span>
+        </div>
+      </a>
+
+      <a href="caso-saude.html" class="seg-card">
+        <div class="seg-emoji">🏥</div>
+        <div class="seg-info">
+          <h3>Clínicas e Consultórios</h3>
+          <p>25% de faltas. Confirmação automática reduz para 5%.</p>
+          <span class="seg-roi">+53% receita</span>
+        </div>
+      </a>
+
+      <a href="caso-pet.html" class="seg-card">
+        <div class="seg-emoji">🐾</div>
+        <div class="seg-info">
+          <h3>Pet Shop</h3>
+          <p>30+ agendamentos manuais/dia. Automático + lembrete de vacina.</p>
+          <span class="seg-roi">+45% retorno</span>
+        </div>
+      </a>
+
+      <a href="caso-educacao.html" class="seg-card">
+        <div class="seg-emoji">📚</div>
+        <div class="seg-info">
+          <h3>Educação e Cursos</h3>
+          <p>40% desistem em 3 dias. Onboarding automático retém.</p>
+          <span class="seg-roi">+40% retenção</span>
+        </div>
+      </a>
+
+      <a href="caso-restaurante.html" class="seg-card">
+        <div class="seg-emoji">🍽️</div>
+        <div class="seg-info">
+          <h3>Restaurante</h3>
+          <p>Sexta à noite, 30 reservas no WhatsApp. Ninguém perde uma.</p>
+          <span class="seg-roi">0 reservas perdidas</span>
+        </div>
+      </a>
+
+      <a href="caso-oficina.html" class="seg-card">
+        <div class="seg-emoji">🔧</div>
+        <div class="seg-info">
+          <h3>Oficina Mecânica</h3>
+          <p>Orçamento por foto em 10min. Follow-up automático de aprovação.</p>
+          <span class="seg-roi">3x mais aprovações</span>
+        </div>
+      </a>
+
+      <a href="caso-servicos-tecnicos.html" class="seg-card">
+        <div class="seg-emoji">⚡</div>
+        <div class="seg-info">
+          <h3>Serviços Técnicos</h3>
+          <p>Diagnóstico remoto resolve 55% dos chamados sem visita.</p>
+          <span class="seg-roi">+50% faturamento</span>
+        </div>
+      </a>
+
+      <a href="caso-estetica.html" class="seg-card">
+        <div class="seg-emoji">💆</div>
+        <div class="seg-info">
+          <h3>Clínica de Estética</h3>
+          <p>Agenda com mais buracos que horários. Reativação automática.</p>
+          <span class="seg-roi">+35% faturamento</span>
+        </div>
+      </a>
+
+      <a href="caso-academia.html" class="seg-card">
+        <div class="seg-emoji">🏋️</div>
+        <div class="seg-info">
+          <h3>Academia + Barbearia</h3>
+          <p>Lead pede preço e some. IA responde em 3s e agenda visita.</p>
+          <span class="seg-roi">+30 matrículas/mês</span>
+        </div>
+      </a>
+
+    </div>
+  </div>
+</section>
+
+<!-- HOW IT WORKS -->
+<section class="how">
+  <div class="container">
+    <h2 class="how-title">Pronto em <span class="gold">5 minutos.</span> Sem código.</h2>
+    <div class="how-steps">
+      <div class="how-step">
+        <div class="how-num">1</div>
+        <h4>Conecte o WhatsApp</h4>
+        <p>Escaneie o QR code e pronto.</p>
+      </div>
+      <div class="how-step">
+        <div class="how-num">2</div>
+        <h4>IA aprende seu negócio</h4>
+        <p>Cole a URL do site ou descreva.</p>
+      </div>
+      <div class="how-step">
+        <div class="how-num">3</div>
+        <h4>Equipe começa a atender</h4>
+        <p>Respostas inteligentes em segundos.</p>
+      </div>
+      <div class="how-step">
+        <div class="how-num">4</div>
+        <h4>Você recebe o resumo</h4>
+        <p>Briefing + alertas. Sem ruído.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PLANS -->
+<section class="plans" id="planos">
+  <div class="container">
+    <h2 class="plans-title">Escolha sua <span class="gold">equipe digital.</span></h2>
+    <div class="plans-grid">
+
+      <div class="plan">
+        <div class="plan-name">Bronze</div>
+        <div class="plan-price">R$297</div>
+        <div class="plan-period">por mês</div>
+        <ul class="plan-list">
+          <li>1 agente de IA</li>
+          <li>Atendimento 24h WhatsApp</li>
+          <li>CRM Kanban com score</li>
+          <li>Follow-up automático</li>
+          <li>Supervisor + Briefing</li>
+        </ul>
+        <a href="https://aurelius.ia.br" class="plan-cta ghost">Testar grátis →</a>
+      </div>
+
+      <div class="plan pop">
+        <div class="plan-badge">Mais Popular</div>
+        <div class="plan-name">Prata</div>
+        <div class="plan-price">R$597</div>
+        <div class="plan-period">por mês</div>
+        <ul class="plan-list">
+          <li>Tudo do Bronze +</li>
+          <li>3 agentes especializados</li>
+          <li>Eva (porteiro inteligente)</li>
+          <li>Skills evolutivas</li>
+          <li>Campanhas de reativação</li>
+        </ul>
+        <a href="https://aurelius.ia.br" class="plan-cta gold">Testar grátis →</a>
+      </div>
+
+      <div class="plan">
+        <div class="plan-name">Ouro</div>
+        <div class="plan-price">R$1.197</div>
+        <div class="plan-period">por mês</div>
+        <ul class="plan-list">
+          <li>Tudo do Prata +</li>
+          <li>7 agentes departamentais</li>
+          <li>Reunião entre agentes</li>
+          <li>Agent Factory</li>
+          <li>TV Dashboard ao vivo</li>
+          <li>Suporte prioritário</li>
+        </ul>
+        <a href="https://aurelius.ia.br" class="plan-cta ghost">Testar grátis →</a>
+      </div>
+
+    </div>
+    <p class="plans-note">Todos incluem 7 dias grátis. Sem cartão de crédito.</p>
+  </div>
+</section>
+
+<!-- FOOTER CTA -->
+<section class="fcta">
+  <div class="container">
+    <h2>Pronto pra ter uma <span class="gold">equipe digital?</span></h2>
+    <div class="fcta-btns">
+      <a href="https://aurelius.ia.br" class="btn btn-gold" style="padding:16px 36px;font-size:1rem;">Começar agora — 7 dias grátis →</a>
+      <a href="https://wa.me/5541984520339" class="btn btn-outline">Falar com consultor</a>
+    </div>
+    <p class="fcta-note">Sem cartão de crédito. Setup em 5 minutos. Cancele quando quiser.</p>
+  </div>
+</section>
+
+<footer class="footer">© 2026 Aurelius IA · aurelius.ia.br</footer>
+
+</body>
+</html>

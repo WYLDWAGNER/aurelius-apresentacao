@@ -1,0 +1,744 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Gabinete Digital — Seu Mandato Nunca Dorme</title>
+  <meta name="description" content="Inteligencia artificial que monitora seus grupos de WhatsApp, filtra o que importa e entrega briefings diarios. Para deputados, prefeitos e vereadores.">
+  <meta property="og:title" content="Gabinete Digital — Seu Mandato Nunca Dorme">
+  <meta property="og:description" content="IA que monitora grupos de coordenadores e entrega briefings diarios pro gabinete.">
+  <meta property="og:type" content="website">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --ink: #0d0b09;
+      --ink-mid: #1a1714;
+      --ink-light: #2a2420;
+      --ink-surface: #1f1b17;
+      --gold: #b8941f;
+      --gold-light: #d4ad2e;
+      --gold-pale: #e8c94a;
+      --gold-dim: rgba(184,148,31,0.15);
+      --accent: #c44b2b;
+      --parchment: #f5f0e8;
+      --parchment-dim: rgba(245,240,232,0.7);
+      --parchment-muted: rgba(245,240,232,0.45);
+      --parchment-faint: rgba(245,240,232,0.12);
+      --parchment-ghost: rgba(245,240,232,0.06);
+      --green: #4a9e5c;
+      --red: #c44b2b;
+      --yellow: #d4ad2e;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    html { scroll-behavior: smooth; font-size: 16px; }
+
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: var(--ink);
+      color: var(--parchment);
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    .serif { font-family: 'Instrument Serif', serif; }
+
+    .container {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 0 clamp(1.5rem, 4vw, 3rem);
+    }
+
+    /* ═══════════ NAV ═══════════ */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      padding: 1rem 0;
+      background: rgba(13,11,9,0.85);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--parchment-ghost);
+    }
+    nav .container {
+      display: flex; justify-content: space-between; align-items: center;
+    }
+    .nav-brand {
+      font-family: 'Instrument Serif', serif;
+      font-size: 1.3rem; color: var(--gold);
+      text-decoration: none; letter-spacing: -0.01em;
+    }
+    .nav-tag {
+      font-size: 0.65rem; font-weight: 600;
+      letter-spacing: 0.12em; text-transform: uppercase;
+      color: var(--parchment-muted);
+      border: 1px solid var(--parchment-faint);
+      padding: 0.3em 0.8em; border-radius: 100px;
+    }
+
+    /* ═══════════ HERO ═══════════ */
+    .hero {
+      min-height: 100vh;
+      display: flex; align-items: center;
+      padding: 8rem 0 6rem;
+      position: relative; overflow: hidden;
+    }
+    .hero::before {
+      content: '';
+      position: absolute; inset: 0;
+      background:
+        radial-gradient(ellipse at 30% 40%, rgba(184,148,31,0.08) 0%, transparent 55%),
+        radial-gradient(ellipse at 70% 70%, rgba(196,75,43,0.05) 0%, transparent 50%);
+      pointer-events: none;
+    }
+    .hero-content { position: relative; z-index: 1; max-width: 780px; }
+    .hero-eyebrow {
+      display: inline-flex; align-items: center; gap: 0.5rem;
+      font-size: 0.72rem; font-weight: 600;
+      letter-spacing: 0.15em; text-transform: uppercase;
+      color: var(--gold); margin-bottom: 1.5rem;
+    }
+    .hero-eyebrow::before {
+      content: ''; width: 32px; height: 1px; background: var(--gold);
+    }
+    .hero h1 {
+      font-family: 'Instrument Serif', serif;
+      font-size: clamp(3rem, 7vw, 5.5rem);
+      line-height: 1.05; letter-spacing: -0.03em;
+      margin-bottom: 1.5rem;
+    }
+    .hero h1 em { font-style: italic; color: var(--gold); }
+    .hero-sub {
+      font-size: 1.15rem; color: var(--parchment-dim);
+      line-height: 1.7; max-width: 560px; margin-bottom: 2.5rem;
+    }
+    .hero-stats {
+      display: flex; gap: 3rem; padding-top: 2rem;
+      border-top: 1px solid var(--parchment-ghost);
+    }
+    .hero-stat-value {
+      font-family: 'Instrument Serif', serif;
+      font-size: 2.2rem; color: var(--gold); line-height: 1;
+    }
+    .hero-stat-label {
+      font-size: 0.78rem; color: var(--parchment-muted); margin-top: 0.3rem;
+    }
+
+    /* ═══════════ PROBLEM ═══════════ */
+    .problem { padding: 7rem 0; position: relative; }
+    .problem::before {
+      content: ''; position: absolute; top: 0; left: 0; right: 0;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--parchment-faint), transparent);
+    }
+    .section-label {
+      font-size: 0.68rem; font-weight: 600;
+      letter-spacing: 0.15em; text-transform: uppercase;
+      color: var(--gold); margin-bottom: 1rem;
+      display: flex; align-items: center; gap: 0.5rem;
+    }
+    .section-label::before {
+      content: ''; width: 8px; height: 8px;
+      background: var(--gold); border-radius: 2px;
+    }
+    .section-title {
+      font-family: 'Instrument Serif', serif;
+      font-size: clamp(1.8rem, 3.5vw, 2.8rem);
+      line-height: 1.15; letter-spacing: -0.02em;
+      margin-bottom: 3rem;
+    }
+    .problem-grid {
+      display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem;
+    }
+    .problem-card {
+      padding: 2rem; border-radius: 16px;
+      border: 1px solid var(--parchment-ghost);
+      background: var(--ink-surface);
+      transition: all 0.3s ease;
+    }
+    .problem-card:hover {
+      border-color: rgba(184,148,31,0.2);
+      transform: translateY(-2px);
+    }
+    .problem-icon {
+      font-size: 2rem; margin-bottom: 1rem;
+      filter: grayscale(0.3);
+    }
+    .problem-card h3 {
+      font-family: 'Instrument Serif', serif;
+      font-size: 1.2rem; margin-bottom: 0.5rem;
+    }
+    .problem-card p {
+      font-size: 0.85rem; color: var(--parchment-muted); line-height: 1.6;
+    }
+    .problem-quote {
+      margin-top: 3rem; padding: 2rem 2.5rem;
+      border-left: 3px solid var(--gold);
+      background: var(--gold-dim); border-radius: 0 12px 12px 0;
+    }
+    .problem-quote p {
+      font-family: 'Instrument Serif', serif;
+      font-size: 1.15rem; font-style: italic;
+      color: var(--parchment-dim); line-height: 1.6;
+    }
+    .problem-quote cite {
+      display: block; margin-top: 0.8rem;
+      font-family: 'DM Sans', sans-serif;
+      font-style: normal; font-size: 0.78rem;
+      color: var(--parchment-muted);
+    }
+
+    /* ═══════════ HOW IT WORKS ═══════════ */
+    .how {
+      padding: 7rem 0;
+      background: linear-gradient(180deg, var(--ink) 0%, var(--ink-mid) 100%);
+      position: relative;
+    }
+    .how::before {
+      content: ''; position: absolute; top: 0; left: 0; right: 0;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--parchment-faint), transparent);
+    }
+    .steps {
+      display: grid; grid-template-columns: repeat(4, 1fr); gap: 0;
+      margin-top: 3rem; position: relative;
+    }
+    .steps::before {
+      content: ''; position: absolute;
+      top: 28px; left: 12.5%; right: 12.5%;
+      height: 2px; background: var(--parchment-ghost);
+    }
+    .step { text-align: center; position: relative; padding: 0 1rem; }
+    .step-num {
+      width: 56px; height: 56px; border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      margin: 0 auto 1.2rem;
+      font-family: 'Instrument Serif', serif;
+      font-size: 1.3rem; font-weight: 700;
+      background: var(--ink);
+      border: 2px solid var(--gold);
+      color: var(--gold);
+      position: relative; z-index: 1;
+    }
+    .step h3 {
+      font-size: 0.95rem; font-weight: 600; margin-bottom: 0.4rem;
+    }
+    .step p {
+      font-size: 0.8rem; color: var(--parchment-muted); line-height: 1.5;
+    }
+
+    /* ═══════════ BRIEFING MOCK ═══════════ */
+    .briefing { padding: 7rem 0; position: relative; }
+    .briefing::before {
+      content: ''; position: absolute; top: 0; left: 0; right: 0;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--parchment-faint), transparent);
+    }
+    .briefing-layout {
+      display: grid; grid-template-columns: 1fr 1.2fr; gap: 4rem;
+      align-items: center; margin-top: 3rem;
+    }
+    .briefing-phone {
+      width: 320px; margin: 0 auto;
+      background: #111; border-radius: 32px;
+      padding: 10px; position: relative;
+      box-shadow: 0 40px 80px rgba(0,0,0,0.4), 0 0 0 1px rgba(184,148,31,0.15);
+    }
+    .briefing-screen {
+      background: #0b141a;
+      border-radius: 24px; overflow: hidden;
+    }
+    .briefing-header {
+      background: #075e54; padding: 0.7rem 1rem;
+      display: flex; align-items: center; gap: 0.6rem;
+    }
+    .briefing-avatar {
+      width: 34px; height: 34px; border-radius: 50%;
+      background: linear-gradient(135deg, var(--gold), #8a6d14);
+      display: flex; align-items: center; justify-content: center;
+      font-weight: 700; font-size: 0.75rem; color: var(--ink);
+    }
+    .briefing-name { font-size: 0.82rem; font-weight: 600; color: white; }
+    .briefing-status { font-size: 0.65rem; color: rgba(255,255,255,0.5); }
+    .briefing-chat { padding: 0.8rem; display: flex; flex-direction: column; gap: 0.4rem; }
+    .b-msg {
+      background: #005c4b; color: #e9edef;
+      padding: 0.55rem 0.7rem; border-radius: 8px;
+      font-size: 0.72rem; line-height: 1.5;
+      align-self: flex-end; max-width: 92%;
+      border-top-right-radius: 2px;
+    }
+    .b-msg strong { color: var(--gold-pale); }
+    .b-msg .urgente { color: #ff6b6b; font-weight: 700; }
+    .b-msg .ok { color: #69db7c; }
+    .b-time {
+      font-size: 0.55rem; color: rgba(255,255,255,0.35);
+      text-align: right; margin-top: 0.15rem;
+    }
+
+    .briefing-explain h3 {
+      font-family: 'Instrument Serif', serif;
+      font-size: 1.6rem; margin-bottom: 1rem;
+    }
+    .briefing-explain p {
+      font-size: 0.92rem; color: var(--parchment-muted);
+      line-height: 1.7; margin-bottom: 1.5rem;
+    }
+    .briefing-features { list-style: none; }
+    .briefing-features li {
+      padding: 0.6rem 0;
+      border-bottom: 1px solid var(--parchment-ghost);
+      font-size: 0.88rem; color: var(--parchment-dim);
+      display: flex; align-items: flex-start; gap: 0.6rem;
+    }
+    .briefing-features li::before {
+      content: '';
+      width: 6px; height: 6px; border-radius: 50%;
+      background: var(--gold); flex-shrink: 0;
+      margin-top: 0.5rem;
+    }
+
+    /* ═══════════ FEATURES ═══════════ */
+    .features {
+      padding: 7rem 0;
+      background: var(--ink-mid); position: relative;
+    }
+    .features::before {
+      content: ''; position: absolute; top: 0; left: 0; right: 0;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--parchment-faint), transparent);
+    }
+    .features-grid {
+      display: grid; grid-template-columns: repeat(2, 1fr); gap: 1.5rem;
+      margin-top: 3rem;
+    }
+    .feature {
+      padding: 2rem; border-radius: 16px;
+      border: 1px solid var(--parchment-ghost);
+      background: var(--ink);
+      display: flex; gap: 1.2rem; align-items: flex-start;
+      transition: all 0.3s ease;
+    }
+    .feature:hover {
+      border-color: rgba(184,148,31,0.2);
+      transform: translateY(-2px);
+    }
+    .feature-icon {
+      width: 48px; height: 48px; border-radius: 12px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.3rem; flex-shrink: 0;
+      background: var(--gold-dim);
+    }
+    .feature h3 {
+      font-size: 1rem; font-weight: 600; margin-bottom: 0.3rem;
+    }
+    .feature p {
+      font-size: 0.82rem; color: var(--parchment-muted); line-height: 1.6;
+    }
+
+    /* ═══════════ PRICING ═══════════ */
+    .pricing { padding: 7rem 0; text-align: center; position: relative; }
+    .pricing::before {
+      content: ''; position: absolute; top: 0; left: 0; right: 0;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--parchment-faint), transparent);
+    }
+    .price-card {
+      max-width: 480px; margin: 3rem auto 0;
+      padding: 3rem; border-radius: 20px;
+      border: 1.5px solid rgba(184,148,31,0.3);
+      background: linear-gradient(145deg, var(--ink-mid), var(--ink-surface));
+      box-shadow: 0 20px 60px rgba(184,148,31,0.08);
+      position: relative; overflow: hidden;
+    }
+    .price-card::before {
+      content: ''; position: absolute; top: 0; left: 0; right: 0;
+      height: 3px;
+      background: linear-gradient(90deg, var(--gold), var(--gold-pale), var(--gold));
+    }
+    .price-from {
+      font-size: 0.78rem; color: var(--parchment-muted);
+      text-transform: uppercase; letter-spacing: 0.1em;
+      margin-bottom: 0.5rem;
+    }
+    .price-value {
+      font-family: 'Instrument Serif', serif;
+      font-size: 3.5rem; color: var(--gold); line-height: 1;
+    }
+    .price-value small {
+      font-size: 1rem; color: var(--parchment-muted);
+      font-family: 'DM Sans', sans-serif;
+    }
+    .price-desc {
+      font-size: 0.9rem; color: var(--parchment-muted);
+      margin: 1rem 0 2rem; line-height: 1.6;
+    }
+    .price-includes {
+      list-style: none; text-align: left;
+      margin-bottom: 2rem;
+    }
+    .price-includes li {
+      padding: 0.5rem 0;
+      border-bottom: 1px solid var(--parchment-ghost);
+      font-size: 0.85rem; color: var(--parchment-dim);
+      display: flex; align-items: center; gap: 0.5rem;
+    }
+    .price-includes li::before {
+      content: ''; width: 18px; height: 18px; border-radius: 50%;
+      background: rgba(74,158,92,0.15); flex-shrink: 0;
+      display: flex; align-items: center; justify-content: center;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 16 16' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M4 8l3 3 5-5' stroke='%234a9e5c' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+      background-size: 14px; background-repeat: no-repeat; background-position: center;
+    }
+
+    /* ═══════════ CTA ═══════════ */
+    .cta {
+      padding: 7rem 0; text-align: center; position: relative;
+    }
+    .cta::before {
+      content: ''; position: absolute; inset: 0;
+      background: radial-gradient(ellipse at 50% 50%, rgba(184,148,31,0.06) 0%, transparent 60%);
+      pointer-events: none;
+    }
+    .cta h2 {
+      font-family: 'Instrument Serif', serif;
+      font-size: clamp(2rem, 4.5vw, 3.5rem);
+      line-height: 1.15; letter-spacing: -0.02em;
+      margin-bottom: 1rem; position: relative;
+    }
+    .cta h2 em { font-style: italic; color: var(--gold); }
+    .cta p {
+      font-size: 1rem; color: var(--parchment-muted);
+      max-width: 500px; margin: 0 auto 2rem; line-height: 1.7;
+    }
+    .btn-gold {
+      display: inline-flex; align-items: center; gap: 0.5rem;
+      background: linear-gradient(135deg, var(--gold), var(--gold-light));
+      color: var(--ink); padding: 1em 2.2em;
+      border-radius: 10px; text-decoration: none;
+      font-weight: 700; font-size: 0.95rem;
+      transition: all 0.25s ease;
+      border: none; cursor: pointer;
+      box-shadow: 0 4px 20px rgba(184,148,31,0.25);
+    }
+    .btn-gold:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 30px rgba(184,148,31,0.35);
+    }
+    .cta-note {
+      margin-top: 1.2rem; font-size: 0.75rem;
+      color: var(--parchment-muted);
+    }
+
+    /* ═══════════ FOOTER ═══════════ */
+    footer {
+      padding: 2.5rem 0;
+      border-top: 1px solid var(--parchment-ghost);
+    }
+    footer .container {
+      display: flex; justify-content: space-between; align-items: center;
+    }
+    .footer-brand {
+      font-family: 'Instrument Serif', serif;
+      font-size: 1rem; color: var(--gold);
+    }
+    .footer-text { font-size: 0.72rem; color: var(--parchment-muted); }
+
+    /* ═══════════ ANIMATIONS ═══════════ */
+    .fade-up {
+      opacity: 0; transform: translateY(24px);
+      transition: all 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .fade-up.visible { opacity: 1; transform: translateY(0); }
+    .stagger-1 { transition-delay: 0.1s; }
+    .stagger-2 { transition-delay: 0.2s; }
+    .stagger-3 { transition-delay: 0.3s; }
+    .stagger-4 { transition-delay: 0.4s; }
+
+    /* ═══════════ RESPONSIVE ═══════════ */
+    @media (max-width: 768px) {
+      .problem-grid { grid-template-columns: 1fr; }
+      .steps { grid-template-columns: repeat(2, 1fr); gap: 2rem; }
+      .steps::before { display: none; }
+      .briefing-layout { grid-template-columns: 1fr; }
+      .briefing-phone { order: -1; }
+      .features-grid { grid-template-columns: 1fr; }
+      .hero-stats { flex-direction: column; gap: 1.5rem; }
+      footer .container { flex-direction: column; gap: 0.5rem; text-align: center; }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- NAV -->
+  <nav>
+    <div class="container">
+      <a href="#" class="nav-brand">Gabinete Digital</a>
+      <span class="nav-tag">Por Aurelius IA</span>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="container">
+      <div class="hero-content">
+        <div class="hero-eyebrow">Inteligencia para mandatos</div>
+        <h1>Seu Gabinete<br><em>Nunca Dorme.</em></h1>
+        <p class="hero-sub">
+          Uma inteligencia artificial que monitora seus grupos de coordenadores no WhatsApp, filtra o que importa e entrega briefings diarios no seu celular — antes do cafe da manha.
+        </p>
+        <div class="hero-stats">
+          <div>
+            <div class="hero-stat-value">5x</div>
+            <div class="hero-stat-label">Briefings por dia</div>
+          </div>
+          <div>
+            <div class="hero-stat-value">24/7</div>
+            <div class="hero-stat-label">Monitoramento</div>
+          </div>
+          <div>
+            <div class="hero-stat-value">0</div>
+            <div class="hero-stat-label">Mensagens perdidas</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PROBLEM -->
+  <section class="problem">
+    <div class="container">
+      <div class="section-label">O problema</div>
+      <h2 class="section-title fade-up">Seus grupos de WhatsApp sao<br>um campo de batalha de informacao.</h2>
+
+      <div class="problem-grid">
+        <div class="problem-card fade-up stagger-1">
+          <div class="problem-icon">📱</div>
+          <h3>300+ mensagens por dia</h3>
+          <p>Grupos de coordenadores regionais geram centenas de mensagens. Informacao critica se perde entre memes, bom-dias e audios de 3 minutos.</p>
+        </div>
+        <div class="problem-card fade-up stagger-2">
+          <div class="problem-icon">🔥</div>
+          <h3>Crises passam despercebidas</h3>
+          <p>Um coordenador relata um problema urgente na regiao as 23h. Voce so ve no dia seguinte — quando ja virou noticia.</p>
+        </div>
+        <div class="problem-card fade-up stagger-3">
+          <div class="problem-icon">📊</div>
+          <h3>Sem visao consolidada</h3>
+          <p>Cada coordenador manda relatorio de um jeito diferente. Nao existe um painel unico com a saude do mandato por regiao.</p>
+        </div>
+      </div>
+
+      <div class="problem-quote fade-up">
+        <p>"Eu tenho 15 grupos de coordenadores. E impossivel acompanhar tudo. O que eu preciso e alguem que leia tudo por mim e me diga so o que importa."</p>
+        <cite>— Dor real de um deputado estadual</cite>
+      </div>
+    </div>
+  </section>
+
+  <!-- HOW IT WORKS -->
+  <section class="how">
+    <div class="container">
+      <div class="section-label">Como funciona</div>
+      <h2 class="section-title fade-up">Quatro passos. Zero esforco.</h2>
+
+      <div class="steps fade-up">
+        <div class="step">
+          <div class="step-num">1</div>
+          <h3>Conecta</h3>
+          <p>Voce conecta o WhatsApp do gabinete. Leva 30 segundos — escaneia um QR code.</p>
+        </div>
+        <div class="step">
+          <div class="step-num">2</div>
+          <h3>Monitora</h3>
+          <p>A IA le todas as mensagens dos seus grupos de coordenadores em tempo real. 24 horas por dia.</p>
+        </div>
+        <div class="step">
+          <div class="step-num">3</div>
+          <h3>Filtra</h3>
+          <p>Classifica cada mensagem: urgente, demanda, relatorio, informativo. Descarta ruido.</p>
+        </div>
+        <div class="step">
+          <div class="step-num">4</div>
+          <h3>Entrega</h3>
+          <p>Voce recebe briefings no WhatsApp: 7h, 13h e 20h. So o que importa, resumido.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- BRIEFING MOCK -->
+  <section class="briefing">
+    <div class="container">
+      <div class="section-label">Na pratica</div>
+      <h2 class="section-title fade-up">Isso e o que voce recebe<br>todo dia as 7h da manha.</h2>
+
+      <div class="briefing-layout">
+        <div class="briefing-phone fade-up">
+          <div class="briefing-screen">
+            <div class="briefing-header">
+              <div class="briefing-avatar">GD</div>
+              <div>
+                <div class="briefing-name">Gabinete Digital</div>
+                <div class="briefing-status">briefing automatico</div>
+              </div>
+            </div>
+            <div class="briefing-chat">
+              <div class="b-msg">
+                <strong>BRIEFING MATINAL — 13/04</strong><br><br>
+                <span class="urgente">URGENTE</span><br>
+                Coordenador Maringa relata alagamento no Jd. Alvorada. Moradores cobrando posicionamento. <em>3 mensagens sobre isso ontem a noite.</em><br><br>
+                <strong>DEMANDAS NOVAS (4)</strong><br>
+                - Londrina: pedido de emenda para UBS do Cj. Cafezal<br>
+                - Cascavel: ponte na PR-468 interditada, cobra solucao<br>
+                - Ponta Grossa: convite para evento dia 20/04<br>
+                - Foz: coordenador pede reuniao com prefeito<br><br>
+                <strong>RELATORIOS RECEBIDOS</strong><br>
+                <span class="ok">Londrina, Cascavel, Maringa</span> — em dia<br>
+                <span class="urgente">Foz, Guarapuava</span> — atrasados 3 dias<br><br>
+                <strong>ACOES SUGERIDAS</strong><br>
+                1. Responder sobre alagamento Maringa (urgente)<br>
+                2. Cobrar relatorio de Foz e Guarapuava<br>
+                3. Confirmar presenca evento Ponta Grossa
+                <div class="b-time">07:00</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="briefing-explain fade-up">
+          <h3>Tudo que voce precisa saber.<br>Em 30 segundos de leitura.</h3>
+          <p>
+            O briefing e gerado automaticamente pela IA, que leu todas as mensagens dos seus grupos nas ultimas horas. Ele classifica por urgencia, agrupa por regiao e sugere acoes concretas.
+          </p>
+          <ul class="briefing-features">
+            <li>Classificacao automatica: urgente, demanda, relatorio, informativo</li>
+            <li>Agrupamento por coordenador e regiao</li>
+            <li>Deteccao de crises antes de virarem problema</li>
+            <li>Cobranca automatica de relatorios atrasados</li>
+            <li>Sugestao de acoes prioritarias para o dia</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FEATURES -->
+  <section class="features">
+    <div class="container">
+      <div class="section-label">Funcionalidades</div>
+      <h2 class="section-title fade-up">Um chefe de gabinete que<br>nunca esquece nada.</h2>
+
+      <div class="features-grid">
+        <div class="feature fade-up stagger-1">
+          <div class="feature-icon">🔴</div>
+          <div>
+            <h3>Triagem de Urgencia</h3>
+            <p>Classifica mensagens em 3 niveis. Crises e emergencias geram alerta imediato no seu celular — nao espera o proximo briefing.</p>
+          </div>
+        </div>
+        <div class="feature fade-up stagger-2">
+          <div class="feature-icon">📋</div>
+          <div>
+            <h3>Relatorio Semanal</h3>
+            <p>Todo domingo a noite: resumo consolidado da semana. Demandas abertas, resolvidas, coordenadores mais ativos e regioes criticas.</p>
+          </div>
+        </div>
+        <div class="feature fade-up stagger-3">
+          <div class="feature-icon">🏆</div>
+          <div>
+            <h3>Ranking de Coordenadores</h3>
+            <p>Quem esta mandando relatorio em dia? Quem sumiu? A IA cobra automaticamente quem esta devendo feedback.</p>
+          </div>
+        </div>
+        <div class="feature fade-up stagger-4">
+          <div class="feature-icon">🗺️</div>
+          <div>
+            <h3>Mapa de Demandas</h3>
+            <p>Visao geografica das demandas por regiao. Identifica onde o mandato precisa de mais atencao — antes das eleicoes.</p>
+          </div>
+        </div>
+        <div class="feature fade-up stagger-1">
+          <div class="feature-icon">🔒</div>
+          <div>
+            <h3>Sigilo Total</h3>
+            <p>Ninguem no grupo sabe que a IA esta monitorando. Funciona de forma invisivel — nao envia mensagens, nao aparece online.</p>
+          </div>
+        </div>
+        <div class="feature fade-up stagger-2">
+          <div class="feature-icon">🎙️</div>
+          <div>
+            <h3>Entende Audios</h3>
+            <p>Transcreve e analisa audios automaticamente. Coordenador mandou audio de 3 minutos? Voce le o resumo em 5 segundos.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PRICING -->
+  <section class="pricing">
+    <div class="container">
+      <div class="section-label" style="justify-content: center;">Investimento</div>
+      <h2 class="section-title fade-up">Menos que um estagiario.<br>Mais eficiente que uma equipe.</h2>
+
+      <div class="price-card fade-up">
+        <div class="price-from">A partir de</div>
+        <div class="price-value">R$ 200 <small>/mes</small></div>
+        <p class="price-desc">
+          Monitoramento ilimitado de grupos.<br>Sem taxa de setup. Cancele quando quiser.
+        </p>
+        <ul class="price-includes">
+          <li>Monitoramento 24/7 de ate 20 grupos</li>
+          <li>Briefings 3x ao dia (7h, 13h, 20h)</li>
+          <li>Relatorio semanal consolidado</li>
+          <li>Alertas de urgencia em tempo real</li>
+          <li>Transcricao automatica de audios</li>
+          <li>Ranking de coordenadores</li>
+          <li>Suporte dedicado via WhatsApp</li>
+        </ul>
+        <a href="#contato" class="btn-gold">
+          Quero para meu gabinete
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8h10m0 0L9 4m4 4L9 12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="cta" id="contato">
+    <div class="container">
+      <h2 class="fade-up">Enquanto voce dorme,<br><em>o gabinete trabalha.</em></h2>
+      <p class="fade-up">Seus coordenadores continuam mandando mensagens. A pergunta e: voce vai ler 300 mensagens amanha, ou vai ler 1 briefing?</p>
+      <a href="#" class="btn-gold fade-up">
+        Agendar demonstracao gratuita
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8h10m0 0L9 4m4 4L9 12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </a>
+      <p class="cta-note fade-up">Setup em 24h. Sem contrato de fidelidade. Sigilo garantido.</p>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="container">
+      <div class="footer-brand">Gabinete Digital</div>
+      <div class="footer-text">Powered by Aurelius IA — aurelius.ia.br</div>
+    </div>
+  </footer>
+
+  <!-- SCRIPTS -->
+  <script>
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) entry.target.classList.add('visible');
+      });
+    }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+    document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+  </script>
+
+</body>
+</html>

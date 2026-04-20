@@ -325,7 +325,7 @@ body::after {
   <div class="container hero-content">
     <div class="breadcrumb"><a href="apresentacao.html">Aurelius IA</a> / Saúde</div>
     <div class="hero-badge">&#127973; Clínicas &amp; Consultórios</div>
-    <h1>25% dos seus pacientes faltam.<br>Cada falta custa <span class="gold">R$300.</span></h1>
+    <h1>25% dos seus pacientes faltam.<br>Cada falta custa <span class="gold">R$$300.</span></h1>
     <p class="hero-subtitle">
       Paciente marca, esquece, não confirma, cancela em cima da hora. Recepcionista gasta o dia inteiro no WhatsApp confirmando consulta. E se uma equipe digital fizesse tudo isso — e ainda reativasse pacientes que sumiram?
     </p>
@@ -341,12 +341,12 @@ body::after {
   <div class="container">
     <div class="section-label">O Dia a Dia</div>
     <h2 class="section-title">Cadeira vazia, agenda cheia no papel.<br><span class="gold">Caos real</span> no consultório.</h2>
-    <p class="pain-intro">Uma clínica com 50 consultas/semana perde pelo menos 12 por falta. São R$3.600/semana evaporando — sem contar reativação zero e recepcionista sobrecarregada.</p>
+    <p class="pain-intro">Uma clínica com 50 consultas/semana perde pelo menos 12 por falta. São R$$3.600/semana evaporando — sem contar reativação zero e recepcionista sobrecarregada.</p>
     <div class="pain-grid">
       <div class="pain-card">
         <div class="pain-icon">&#128683;</div>
         <h3>25% de faltas</h3>
-        <p>1 em 4 pacientes não aparece. Cadeira vazia = R$300 perdidos por consulta.</p>
+        <p>1 em 4 pacientes não aparece. Cadeira vazia = R$$300 perdidos por consulta.</p>
       </div>
       <div class="pain-card">
         <div class="pain-icon">&#128241;</div>
@@ -497,7 +497,7 @@ body::after {
               <div class="scenario-step-dot" style="background: var(--gold);"></div>
               <div class="scenario-step-content">
                 <div class="scenario-step-who" style="color: var(--gold);">Resultado</div>
-                <div class="scenario-step-what">Zero cadeiras vazias. R$300 salvos. Recepcionista não precisou pegar o telefone.</div>
+                <div class="scenario-step-what">Zero cadeiras vazias. R$$300 salvos. Recepcionista não precisou pegar o telefone.</div>
               </div>
             </div>
           </div>
@@ -606,7 +606,7 @@ body::after {
               <div class="scenario-step-dot" style="background: var(--gold);"></div>
               <div class="scenario-step-content">
                 <div class="scenario-step-who" style="color: var(--gold);">Resultado</div>
-                <div class="scenario-step-what">12 retornos agendados = R$3.600 em receita recuperada. Pacientes que tinham sumido voltam com uma mensagem. Sem esforço da recepção.</div>
+                <div class="scenario-step-what">12 retornos agendados = R$$3.600 em receita recuperada. Pacientes que tinham sumido voltam com uma mensagem. Sem esforço da recepção.</div>
               </div>
             </div>
           </div>
@@ -658,8 +658,8 @@ body::after {
         <div class="roi-label">Agendamento sem recepcionista</div>
       </div>
       <div class="roi-card highlight">
-        <div class="roi-value" style="font-size: 3.2rem;">R$23K/mês</div>
-        <div class="roi-label" style="font-size: 1.1rem; color: var(--text);">Receita com 50 consultas/semana (era R$15K)</div>
+        <div class="roi-value" style="font-size: 3.2rem;">R$$23K/mês</div>
+        <div class="roi-label" style="font-size: 1.1rem; color: var(--text);">Receita com 50 consultas/semana (era R$$15K)</div>
       </div>
     </div>
 
@@ -672,7 +672,7 @@ body::after {
         </thead>
         <tbody>
           <tr><td>Taxa de faltas</td><td class="val-bad">25%</td><td class="val-good">5%</td></tr>
-          <tr><td>Receita/mês (50 consultas)</td><td class="val-bad">R$15K</td><td class="val-good">R$23K (+53%)</td></tr>
+          <tr><td>Receita/mês (50 consultas)</td><td class="val-bad">R$$15K</td><td class="val-good">R$$23K (+53%)</td></tr>
           <tr><td>Retorno voluntário</td><td class="val-bad">40%</td><td class="val-good">70%</td></tr>
           <tr><td>Tempo recepcionista no WhatsApp</td><td class="val-bad">6h/dia</td><td class="val-good">1h/dia</td></tr>
           <tr><td>Paciente reativado</td><td class="val-bad">10%</td><td class="val-good">45%</td></tr>
@@ -689,13 +689,26 @@ body::after {
     <h2 class="section-title">Pronto pra acabar com <span class="gold">cadeiras vazias?</span></h2>
     <div class="cta-buttons">
       <a href="https://aurelius.ia.br/?view=trial" class="btn-primary" style="padding: 18px 40px; font-size: 1.1rem;">Começar agora — 7 dias grátis &rarr;</a>
-      <a href="https://wa.me/5541984520339" class="btn-secondary">Falar com consultor</a>
+      <a href="#" onclick="AureliusWidget.open(); return false;" class="btn-secondary">Falar com consultor</a>
     </div>
     <p class="cta-note">Sem cartão de crédito. Setup em 5 minutos. Cancele quando quiser.</p>
   </div>
 </section>
 
 <footer class="footer">&copy; 2026 Aurelius IA &middot; aurelius.ia.br</footer>
+
+
+<!-- HERMES WIDGET (qualifica lead antes de abrir WhatsApp) -->
+<script src="https://hermes.aurelius.ia.br/widget.js"
+        data-tenant="aurelius"
+        data-campaign="caso-saude"
+        data-wa="5541984520339"
+        data-color="#f59e0b"
+        data-bot-name="Consultor Aurelius"
+        data-question="Qual seu principal desafio no WhatsApp da empresa?"
+        data-options="Leads perdidos,Atendimento 24/7,Qualificar antes de vender,Organizar conversas,Outro"
+        data-api="https://hermes.aurelius.ia.br/api/leads"
+        data-api-key="ak_live_P_1nILj84SjSmCRBayGDN4Xeexr7C7du"></script>
 
 </body>
 </html>

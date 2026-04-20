@@ -473,7 +473,7 @@ body::after {
               <div class="scenario-step-dot" style="background: #3B82F6;"></div>
               <div class="scenario-step-content">
                 <div class="scenario-step-who" style="color: #60A5FA;">Bruno (Comercial)</div>
-                <div class="scenario-step-what">Responde todos em paralelo: &ldquo;Oi! Temos planos a partir de R$89/m&ecirc;s. Voc&ecirc; prefere muscula&ccedil;&atilde;o, funcional ou crossfit?&rdquo; Qualifica 5, agenda 3 visitas pro mesmo dia.</div>
+                <div class="scenario-step-what">Responde todos em paralelo: &ldquo;Oi! Temos planos a partir de R$$89/m&ecirc;s. Voc&ecirc; prefere muscula&ccedil;&atilde;o, funcional ou crossfit?&rdquo; Qualifica 5, agenda 3 visitas pro mesmo dia.</div>
               </div>
             </div>
             <div class="scenario-step">
@@ -696,7 +696,7 @@ body::after {
           <li>&ldquo;E a&iacute;! Quer agendar um corte? Ter&ccedil;a e quarta tenho vaga &agrave;s 10h, 14h e 16h.&rdquo;</li>
           <li>Pergunta tipo de servi&ccedil;o: corte, barba, combo, pigmenta&ccedil;&atilde;o</li>
           <li>Lista de espera quando lotou</li>
-          <li>Vende combos: &ldquo;Corte + barba + sobrancelha: R$15 off&rdquo;</li>
+          <li>Vende combos: &ldquo;Corte + barba + sobrancelha: R$$15 off&rdquo;</li>
           <li>Agendamento com prefer&ecirc;ncia de barbeiro</li>
           <li>2h antes: &ldquo;Fala, Jo&atilde;o! Seu corte &eacute; hoje &agrave;s 15h. Beleza?&rdquo;</li>
           <li>3 semanas ap&oacute;s &uacute;ltimo corte: &ldquo;O cabelo j&aacute; deve estar pedindo um trato! Agendar pra essa semana?&rdquo;</li>
@@ -836,13 +836,26 @@ body::after {
     <h2 class="section-title">Pronto pra agendar no autom&aacute;tico<br>e <span class="gold">cortar mais?</span></h2>
     <div class="cta-buttons">
       <a href="https://aurelius.ia.br/?view=trial" class="btn-primary" style="padding: 18px 40px; font-size: 1.1rem;">Come&ccedil;ar agora &mdash; 7 dias gr&aacute;tis &rarr;</a>
-      <a href="https://wa.me/5541984520339" class="btn-secondary">Falar com consultor</a>
+      <a href="#" onclick="AureliusWidget.open(); return false;" class="btn-secondary">Falar com consultor</a>
     </div>
     <p class="cta-note">Sem cart&atilde;o de cr&eacute;dito. Setup em 5 minutos. Cancele quando quiser.</p>
   </div>
 </section>
 
 <footer class="footer">&copy; 2026 Aurelius IA &middot; aurelius.ia.br</footer>
+
+
+<!-- HERMES WIDGET (qualifica lead antes de abrir WhatsApp) -->
+<script src="https://hermes.aurelius.ia.br/widget.js"
+        data-tenant="aurelius"
+        data-campaign="caso-academia"
+        data-wa="5541984520339"
+        data-color="#f59e0b"
+        data-bot-name="Consultor Aurelius"
+        data-question="Qual seu principal desafio no WhatsApp da empresa?"
+        data-options="Leads perdidos,Atendimento 24/7,Qualificar antes de vender,Organizar conversas,Outro"
+        data-api="https://hermes.aurelius.ia.br/api/leads"
+        data-api-key="ak_live_P_1nILj84SjSmCRBayGDN4Xeexr7C7du"></script>
 
 </body>
 </html>

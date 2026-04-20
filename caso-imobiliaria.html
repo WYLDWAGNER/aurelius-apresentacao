@@ -480,7 +480,7 @@ body::after {
               <div class="scenario-step-dot" style="background: #F59E0B;"></div>
               <div class="scenario-step-content">
                 <div class="scenario-step-who" style="color: var(--gold);">Eva (Triagem)</div>
-                <div class="scenario-step-what">Lead chega pelo Viva Real: &ldquo;Bom dia, procuro apartamento 3 quartos em Pinhais, at&eacute; R$350K.&rdquo; Eva classifica como lead novo de compra e encaminha para Rafael com contexto completo.</div>
+                <div class="scenario-step-what">Lead chega pelo Viva Real: &ldquo;Bom dia, procuro apartamento 3 quartos em Pinhais, at&eacute; R$$350K.&rdquo; Eva classifica como lead novo de compra e encaminha para Rafael com contexto completo.</div>
               </div>
             </div>
             <div class="scenario-step">
@@ -562,7 +562,7 @@ body::after {
               <div class="scenario-step-dot" style="background: #8B5CF6;"></div>
               <div class="scenario-step-content">
                 <div class="scenario-step-who" style="color: #A78BFA;">Supervisor (An&aacute;lise)</div>
-                <div class="scenario-step-what">Detecta no briefing di&aacute;rio: &ldquo;Carla visitou apt 302 e 405 na semana passada. &Uacute;ltima intera&ccedil;&atilde;o h&aacute; 5 dias. Perfil: compradora, faixa R$300-400K. Follow-up urgente.&rdquo;</div>
+                <div class="scenario-step-what">Detecta no briefing di&aacute;rio: &ldquo;Carla visitou apt 302 e 405 na semana passada. &Uacute;ltima intera&ccedil;&atilde;o h&aacute; 5 dias. Perfil: compradora, faixa R$$300-400K. Follow-up urgente.&rdquo;</div>
               </div>
             </div>
             <div class="scenario-step">
@@ -672,11 +672,11 @@ body::after {
         <div class="roi-label">Follow-ups completados<br><small style="color: var(--text-muted);">(era 30%)</small></div>
       </div>
       <div class="roi-card">
-        <div class="roi-value">R$380K</div>
-        <div class="roi-label">Faturamento potencial/m&ecirc;s<br><small style="color: var(--text-muted);">(era R$180K)</small></div>
+        <div class="roi-value">R$$380K</div>
+        <div class="roi-label">Faturamento potencial/m&ecirc;s<br><small style="color: var(--text-muted);">(era R$$180K)</small></div>
       </div>
       <div class="roi-card highlight">
-        <div class="roi-value" style="font-size: 3.2rem;">+R$200K/m&ecirc;s</div>
+        <div class="roi-value" style="font-size: 3.2rem;">+R$$200K/m&ecirc;s</div>
         <div class="roi-label" style="font-size: 1.1rem; color: var(--text);">Receita adicional (14-16 fechamentos vs 6 anteriores)</div>
       </div>
     </div>
@@ -694,7 +694,7 @@ body::after {
           <tr><td>Follow-up completado</td><td class="val-bad">30%</td><td class="val-good">85%+</td></tr>
           <tr><td>Lead time (captura &rarr; visita)</td><td class="val-bad">3-5 dias</td><td class="val-good">1-2 dias</td></tr>
           <tr><td>Fechamentos/m&ecirc;s</td><td class="val-bad">6</td><td class="val-good">14-16</td></tr>
-          <tr><td>Faturamento mensal</td><td class="val-bad">R$180K</td><td class="val-good">R$380K+</td></tr>
+          <tr><td>Faturamento mensal</td><td class="val-bad">R$$180K</td><td class="val-good">R$$380K+</td></tr>
         </tbody>
       </table>
     </div>
@@ -707,13 +707,26 @@ body::after {
     <h2 class="section-title">Pronto pra parar de perder leads <span class="gold">no WhatsApp?</span></h2>
     <div class="cta-buttons">
       <a href="https://aurelius.ia.br/?view=trial" class="btn-primary" style="padding: 18px 40px; font-size: 1.1rem;">Come&ccedil;ar agora &mdash; 7 dias gr&aacute;tis &rarr;</a>
-      <a href="https://wa.me/5541984520339" class="btn-secondary">Falar com consultor</a>
+      <a href="#" onclick="AureliusWidget.open(); return false;" class="btn-secondary">Falar com consultor</a>
     </div>
     <p class="cta-note">Sem cart&atilde;o de cr&eacute;dito. Setup em 5 minutos.</p>
   </div>
 </section>
 
 <footer class="footer">&copy; 2026 Aurelius IA &middot; aurelius.ia.br</footer>
+
+
+<!-- HERMES WIDGET (qualifica lead antes de abrir WhatsApp) -->
+<script src="https://hermes.aurelius.ia.br/widget.js"
+        data-tenant="aurelius"
+        data-campaign="caso-imobiliaria"
+        data-wa="5541984520339"
+        data-color="#f59e0b"
+        data-bot-name="Consultor Aurelius"
+        data-question="Qual seu principal desafio no WhatsApp da empresa?"
+        data-options="Leads perdidos,Atendimento 24/7,Qualificar antes de vender,Organizar conversas,Outro"
+        data-api="https://hermes.aurelius.ia.br/api/leads"
+        data-api-key="ak_live_P_1nILj84SjSmCRBayGDN4Xeexr7C7du"></script>
 
 </body>
 </html>

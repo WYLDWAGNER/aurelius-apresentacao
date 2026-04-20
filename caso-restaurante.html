@@ -582,7 +582,7 @@ body::after {
               <div class="scenario-step-dot" style="background: #22C55E;"></div>
               <div class="scenario-step-content">
                 <div class="scenario-step-who" style="color: #4ADE80;">Resultado</div>
-                <div class="scenario-step-what">8 dos 40 clientes reservam na mesma semana (20% de conversao). Ticket medio R$180. Sao R$1.440 de receita recuperada que não existiria sem o contato proativo.</div>
+                <div class="scenario-step-what">8 dos 40 clientes reservam na mesma semana (20% de conversao). Ticket medio R$$180. Sao R$$1.440 de receita recuperada que não existiria sem o contato proativo.</div>
               </div>
             </div>
           </div>
@@ -633,7 +633,7 @@ body::after {
         <div class="roi-label">Ocupação em horarios ociosos<br><small style="color: var(--text-muted);">(promocoes inteligentes + reativacao)</small></div>
       </div>
       <div class="roi-card highlight">
-        <div class="roi-value" style="font-size: 3.2rem;">+R$15K/mes</div>
+        <div class="roi-value" style="font-size: 3.2rem;">+R$$15K/mes</div>
         <div class="roi-label" style="font-size: 1.1rem; color: var(--text);">Receita adicional estimada (reservas recuperadas + reativação + ocupação ociosa)</div>
       </div>
     </div>
@@ -664,13 +664,26 @@ body::after {
     <h2 class="section-title">Pronto pra lotar seu restaurante<br><span class="gold">sem tocar no celular?</span></h2>
     <div class="cta-buttons">
       <a href="https://aurelius.ia.br/?view=trial" class="btn-primary" style="padding: 18px 40px; font-size: 1.1rem;">Comecar agora — 7 dias grátis &rarr;</a>
-      <a href="https://wa.me/5541984520339" class="btn-secondary">Falar com consultor</a>
+      <a href="#" onclick="AureliusWidget.open(); return false;" class="btn-secondary">Falar com consultor</a>
     </div>
     <p class="cta-note">Sem cartao de credito. Setup em 5 minutos. Cancele quando quiser.</p>
   </div>
 </section>
 
 <footer class="footer">&copy; 2026 Aurelius IA &middot; aurelius.ia.br</footer>
+
+
+<!-- HERMES WIDGET (qualifica lead antes de abrir WhatsApp) -->
+<script src="https://hermes.aurelius.ia.br/widget.js"
+        data-tenant="aurelius"
+        data-campaign="caso-restaurante"
+        data-wa="5541984520339"
+        data-color="#f59e0b"
+        data-bot-name="Consultor Aurelius"
+        data-question="Qual seu principal desafio no WhatsApp da empresa?"
+        data-options="Leads perdidos,Atendimento 24/7,Qualificar antes de vender,Organizar conversas,Outro"
+        data-api="https://hermes.aurelius.ia.br/api/leads"
+        data-api-key="ak_live_P_1nILj84SjSmCRBayGDN4Xeexr7C7du"></script>
 
 </body>
 </html>

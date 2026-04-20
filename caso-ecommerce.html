@@ -346,7 +346,7 @@ body::after {
       <div class="pain-card">
         <div class="pain-icon">&#x1F6D2;</div>
         <h3>Carrinho abandonado</h3>
-        <p>75% dos carrinhos s&atilde;o abandonados. Sem reativa&ccedil;&atilde;o = R$ jogado fora.</p>
+        <p>75% dos carrinhos s&atilde;o abandonados. Sem reativa&ccedil;&atilde;o = R$$ jogado fora.</p>
       </div>
       <div class="pain-card">
         <div class="pain-icon">&#x1F4AC;</div>
@@ -489,7 +489,7 @@ body::after {
               <div class="scenario-step-dot" style="background: #3B82F6;"></div>
               <div class="scenario-step-content">
                 <div class="scenario-step-who" style="color: #60A5FA;">Sofia (Cross-sell)</div>
-                <div class="scenario-step-what">"Esse vestido combina demais com a bolsa de palha que acabou de chegar! Quer ver?" Cliente adiciona ao carrinho. Ticket m&eacute;dio sobe de R$159 pra R$248.</div>
+                <div class="scenario-step-what">"Esse vestido combina demais com a bolsa de palha que acabou de chegar! Quer ver?" Cliente adiciona ao carrinho. Ticket m&eacute;dio sobe de R$$159 pra R$$248.</div>
               </div>
             </div>
             <div class="scenario-step">
@@ -537,7 +537,7 @@ body::after {
               <div class="scenario-step-dot" style="background: #22C55E;"></div>
               <div class="scenario-step-content">
                 <div class="scenario-step-who" style="color: #4ADE80;">Resultado</div>
-                <div class="scenario-step-what">R$289 recuperados de um carrinho que seria perdido. Multiplica por 15 carrinhos/semana = R$4.335/semana em receita salva.</div>
+                <div class="scenario-step-what">R$$289 recuperados de um carrinho que seria perdido. Multiplica por 15 carrinhos/semana = R$$4.335/semana em receita salva.</div>
               </div>
             </div>
           </div>
@@ -667,7 +667,7 @@ body::after {
       </div>
       <div class="roi-card">
         <div class="roi-value">+33%</div>
-        <div class="roi-label">Aumento no ticket m&eacute;dio<br><small style="color: var(--text-muted);">(de R$180 para R$240)</small></div>
+        <div class="roi-label">Aumento no ticket m&eacute;dio<br><small style="color: var(--text-muted);">(de R$$180 para R$$240)</small></div>
       </div>
       <div class="roi-card">
         <div class="roi-value">98%</div>
@@ -678,8 +678,8 @@ body::after {
         <div class="roi-label">Tempo m&eacute;dio de resposta<br><small style="color: var(--text-muted);">(era 4 horas)</small></div>
       </div>
       <div class="roi-card highlight">
-        <div class="roi-value" style="font-size: 3.2rem;">+R$60K/m&ecirc;s</div>
-        <div class="roi-label" style="font-size: 1.1rem; color: var(--text);">Faturamento adicional (R$180K &rarr; R$240K)</div>
+        <div class="roi-value" style="font-size: 3.2rem;">+R$$60K/m&ecirc;s</div>
+        <div class="roi-label" style="font-size: 1.1rem; color: var(--text);">Faturamento adicional (R$$180K &rarr; R$$240K)</div>
       </div>
     </div>
 
@@ -692,11 +692,11 @@ body::after {
         </thead>
         <tbody>
           <tr><td>Carrinho abandonado (convers&atilde;o)</td><td class="val-bad">25%</td><td class="val-good">45%</td></tr>
-          <tr><td>Ticket m&eacute;dio</td><td class="val-bad">R$180</td><td class="val-good">R$240 (+33%)</td></tr>
+          <tr><td>Ticket m&eacute;dio</td><td class="val-bad">R$$180</td><td class="val-good">R$$240 (+33%)</td></tr>
           <tr><td>Mensagens atendidas</td><td class="val-bad">70%</td><td class="val-good">98%</td></tr>
           <tr><td>Tempo de resposta</td><td class="val-bad">4 horas</td><td class="val-good">1 minuto</td></tr>
           <tr><td>Tempo suporte/dia</td><td class="val-bad">6 horas</td><td class="val-good">1 hora</td></tr>
-          <tr><td>Faturamento/m&ecirc;s</td><td class="val-bad">R$120K</td><td class="val-good">R$180K (+50%)</td></tr>
+          <tr><td>Faturamento/m&ecirc;s</td><td class="val-bad">R$$120K</td><td class="val-good">R$$180K (+50%)</td></tr>
         </tbody>
       </table>
     </div>
@@ -709,13 +709,26 @@ body::after {
     <h2 class="section-title">Pronto pra transformar WhatsApp em<br><span class="gold">m&aacute;quina de vendas?</span></h2>
     <div class="cta-buttons">
       <a href="https://aurelius.ia.br/?view=trial" class="btn-primary" style="padding: 18px 40px; font-size: 1.1rem;">Come&ccedil;ar agora &mdash; 7 dias gr&aacute;tis &rarr;</a>
-      <a href="https://wa.me/5541984520339" class="btn-secondary">Falar com consultor</a>
+      <a href="#" onclick="AureliusWidget.open(); return false;" class="btn-secondary">Falar com consultor</a>
     </div>
     <p class="cta-note">Sem cart&atilde;o de cr&eacute;dito. Setup em 5 minutos. Cancele quando quiser.</p>
   </div>
 </section>
 
 <footer class="footer">&copy; 2026 Aurelius IA &middot; aurelius.ia.br</footer>
+
+
+<!-- HERMES WIDGET (qualifica lead antes de abrir WhatsApp) -->
+<script src="https://hermes.aurelius.ia.br/widget.js"
+        data-tenant="aurelius"
+        data-campaign="caso-ecommerce"
+        data-wa="5541984520339"
+        data-color="#f59e0b"
+        data-bot-name="Consultor Aurelius"
+        data-question="Qual seu principal desafio no WhatsApp da empresa?"
+        data-options="Leads perdidos,Atendimento 24/7,Qualificar antes de vender,Organizar conversas,Outro"
+        data-api="https://hermes.aurelius.ia.br/api/leads"
+        data-api-key="ak_live_P_1nILj84SjSmCRBayGDN4Xeexr7C7du"></script>
 
 </body>
 </html>

@@ -351,7 +351,7 @@ body::after {
       <div class="pain-card">
         <div class="pain-icon">&#x1F6AB;</div>
         <h3>No-show de 20-25%</h3>
-        <p>1 em 4 clientes n&atilde;o aparece. Hor&aacute;rio vago = R$150-300 perdidos por sess&atilde;o.</p>
+        <p>1 em 4 clientes n&atilde;o aparece. Hor&aacute;rio vago = R$$150-300 perdidos por sess&atilde;o.</p>
       </div>
       <div class="pain-card">
         <div class="pain-icon">&#x274C;</div>
@@ -503,7 +503,7 @@ body::after {
               <div class="scenario-step-dot" style="background: #22C55E;"></div>
               <div class="scenario-step-content">
                 <div class="scenario-step-who" style="color: #4ADE80;">Resultado</div>
-                <div class="scenario-step-what">3 confirmam em 20 minutos. 2 hor&aacute;rios vagos viram 0. Receita recuperada: ~R$600 que seriam perdidos.</div>
+                <div class="scenario-step-what">3 confirmam em 20 minutos. 2 hor&aacute;rios vagos viram 0. Receita recuperada: ~R$$600 que seriam perdidos.</div>
               </div>
             </div>
           </div>
@@ -571,7 +571,7 @@ body::after {
               <div class="scenario-step-dot" style="background: #22C55E;"></div>
               <div class="scenario-step-content">
                 <div class="scenario-step-who" style="color: #4ADE80;">Resultado</div>
-                <div class="scenario-step-what">10 agendam. ~R$2.000 em receita que seria perdida para sempre. Clientes que iriam pra concorr&ecirc;ncia voltam pra sua cl&iacute;nica.</div>
+                <div class="scenario-step-what">10 agendam. ~R$$2.000 em receita que seria perdida para sempre. Clientes que iriam pra concorr&ecirc;ncia voltam pra sua cl&iacute;nica.</div>
               </div>
             </div>
           </div>
@@ -591,7 +591,7 @@ body::after {
     <div class="meeting-card">
       <div class="meeting-header">&#x1F4CB; Reuni&atilde;o das 12h &mdash; Resumo</div>
       <div class="meeting-messages">
-        <div class="meeting-msg"><span class="meeting-msg-from" style="color: #EC4899;">Camila &rarr; Juliana:</span> 18 agendamentos hoje. 3 pacotes vendidos (R$2.400). 2 leads de harmoniza&ccedil;&atilde;o &mdash; alto ticket.</div>
+        <div class="meeting-msg"><span class="meeting-msg-from" style="color: #EC4899;">Camila &rarr; Juliana:</span> 18 agendamentos hoje. 3 pacotes vendidos (R$$2.400). 2 leads de harmoniza&ccedil;&atilde;o &mdash; alto ticket.</div>
         <div class="meeting-msg"><span class="meeting-msg-from" style="color: #4ADE80;">Juliana &rarr; Camila:</span> 10 reativa&ccedil;&otilde;es da campanha de 60 dias. Padr&atilde;o: quem fez limpeza de pele volta mais r&aacute;pido que botox.</div>
         <div class="meeting-msg"><span class="meeting-msg-from" style="color: var(--gold);">Supervisor &rarr; Todas:</span> Ter&ccedil;a e quinta t&ecirc;m 3x mais cancelamentos. Sugerir confirma&ccedil;&atilde;o 48h + 24h + 2h nesses dias.</div>
         <div class="meeting-msg"><span class="meeting-msg-from" style="color: #4ADE80;">Juliana &rarr; Camila:</span> Clienta Ana faz 4 procedimentos diferentes. VIP &mdash; oferecer pacote personalizado.</div>
@@ -623,7 +623,7 @@ body::after {
         <div class="roi-label">Tempo da recepcionista no WhatsApp<br><small style="color: var(--text-muted);">(era 5h)</small></div>
       </div>
       <div class="roi-card highlight">
-        <div class="roi-value" style="font-size: 3.2rem;">+R$8K/m&ecirc;s</div>
+        <div class="roi-value" style="font-size: 3.2rem;">+R$$8K/m&ecirc;s</div>
         <div class="roi-label" style="font-size: 1.1rem; color: var(--text);">Receita adicional com agendamento inteligente + reativa&ccedil;&atilde;o</div>
       </div>
     </div>
@@ -654,13 +654,26 @@ body::after {
     <h2 class="section-title">Pronto pra lotar sua agenda<br>sem ficar <span class="gold">presa no WhatsApp?</span></h2>
     <div class="cta-buttons">
       <a href="https://aurelius.ia.br/?view=trial" class="btn-primary" style="padding: 18px 40px; font-size: 1.1rem;">Come&ccedil;ar agora &mdash; 7 dias gr&aacute;tis &rarr;</a>
-      <a href="https://wa.me/5541984520339" class="btn-secondary">Falar com consultor</a>
+      <a href="#" onclick="AureliusWidget.open(); return false;" class="btn-secondary">Falar com consultor</a>
     </div>
     <p class="cta-note">Sem cart&atilde;o de cr&eacute;dito. Setup em 5 minutos. Cancele quando quiser.</p>
   </div>
 </section>
 
 <footer class="footer">&copy; 2026 Aurelius IA &middot; aurelius.ia.br</footer>
+
+
+<!-- HERMES WIDGET (qualifica lead antes de abrir WhatsApp) -->
+<script src="https://hermes.aurelius.ia.br/widget.js"
+        data-tenant="aurelius"
+        data-campaign="caso-estetica"
+        data-wa="5541984520339"
+        data-color="#f59e0b"
+        data-bot-name="Consultor Aurelius"
+        data-question="Qual seu principal desafio no WhatsApp da empresa?"
+        data-options="Leads perdidos,Atendimento 24/7,Qualificar antes de vender,Organizar conversas,Outro"
+        data-api="https://hermes.aurelius.ia.br/api/leads"
+        data-api-key="ak_live_P_1nILj84SjSmCRBayGDN4Xeexr7C7du"></script>
 
 </body>
 </html>

@@ -514,7 +514,7 @@ body::after {
               <div class="scenario-step-dot" style="background: #22C55E;"></div>
               <div class="scenario-step-content">
                 <div class="scenario-step-who" style="color: #4ADE80;">Resultado</div>
-                <div class="scenario-step-what">12 de 15 boletos pagos em 10 dias (80%). Sem a IA, esses 15 boletos ficariam esquecidos e virariam inadimpl&ecirc;ncia permanente. Receita recuperada: ~R$4.500.</div>
+                <div class="scenario-step-what">12 de 15 boletos pagos em 10 dias (80%). Sem a IA, esses 15 boletos ficariam esquecidos e virariam inadimpl&ecirc;ncia permanente. Receita recuperada: ~R$$4.500.</div>
               </div>
             </div>
           </div>
@@ -613,7 +613,7 @@ body::after {
         <div class="meeting-msg"><span class="meeting-msg-from" style="color: #4ADE80;">Marcos &rarr; Alice:</span> 3 alunos inadimplentes h&aacute; mais de 10 dias. Pausar acesso at&eacute; regulariza&ccedil;&atilde;o? Aguardando sua confirma&ccedil;&atilde;o.</div>
         <div class="meeting-msg"><span class="meeting-msg-from" style="color: var(--gold);">Supervisor:</span> Taxa de conclus&atilde;o atual: 82%. 5 alunos precisam de refor&ccedil;o no m&oacute;dulo 2 (assistiram aulas, n&atilde;o fizeram exerc&iacute;cios). Alice, intervir?</div>
         <div class="meeting-msg"><span class="meeting-msg-from" style="color: #60A5FA;">Alice &rarr; Supervisor:</span> Confirmado. Vou enviar material de apoio personalizado pra cada um dos 5 hoje &agrave; tarde.</div>
-        <div class="meeting-msg"><span class="meeting-msg-from" style="color: #4ADE80;">Marcos &rarr; Todos:</span> Cobran&ccedil;a da semana: 12 de 15 boletos recuperados (R$4.500). 3 em negocia&ccedil;&atilde;o.</div>
+        <div class="meeting-msg"><span class="meeting-msg-from" style="color: #4ADE80;">Marcos &rarr; Todos:</span> Cobran&ccedil;a da semana: 12 de 15 boletos recuperados (R$$4.500). 3 em negocia&ccedil;&atilde;o.</div>
       </div>
     </div>
   </div>
@@ -672,13 +672,26 @@ body::after {
     <h2 class="section-title">Pronto pra manter seus alunos<br><span class="gold">at&eacute; o final?</span></h2>
     <div class="cta-buttons">
       <a href="https://aurelius.ia.br/?view=trial" class="btn-primary" style="padding: 18px 40px; font-size: 1.1rem;">Come&ccedil;ar agora &mdash; 7 dias gr&aacute;tis &rarr;</a>
-      <a href="https://wa.me/5541984520339" class="btn-secondary">Falar com consultor</a>
+      <a href="#" onclick="AureliusWidget.open(); return false;" class="btn-secondary">Falar com consultor</a>
     </div>
     <p class="cta-note">Sem cart&atilde;o de cr&eacute;dito. Setup em 5 minutos. Cancele quando quiser.</p>
   </div>
 </section>
 
 <footer class="footer">&copy; 2026 Aurelius IA &middot; aurelius.ia.br</footer>
+
+
+<!-- HERMES WIDGET (qualifica lead antes de abrir WhatsApp) -->
+<script src="https://hermes.aurelius.ia.br/widget.js"
+        data-tenant="aurelius"
+        data-campaign="caso-educacao"
+        data-wa="5541984520339"
+        data-color="#f59e0b"
+        data-bot-name="Consultor Aurelius"
+        data-question="Qual seu principal desafio no WhatsApp da empresa?"
+        data-options="Leads perdidos,Atendimento 24/7,Qualificar antes de vender,Organizar conversas,Outro"
+        data-api="https://hermes.aurelius.ia.br/api/leads"
+        data-api-key="ak_live_P_1nILj84SjSmCRBayGDN4Xeexr7C7du"></script>
 
 </body>
 </html>

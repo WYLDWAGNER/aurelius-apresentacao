@@ -602,7 +602,7 @@ body::after {
     <div class="meeting-card">
       <div class="meeting-header">&#x1F4CB; Reuni&atilde;o das 18h &mdash; Resumo</div>
       <div class="meeting-messages">
-        <div class="meeting-msg"><span class="meeting-msg-from" style="color: #60A5FA;">Mel &rarr; Beto:</span> 18 agendamentos hoje. 3 pacotes vendidos (R$420).</div>
+        <div class="meeting-msg"><span class="meeting-msg-from" style="color: #60A5FA;">Mel &rarr; Beto:</span> 18 agendamentos hoje. 3 pacotes vendidos (R$$420).</div>
         <div class="meeting-msg"><span class="meeting-msg-from" style="color: #4ADE80;">Beto &rarr; Mel:</span> 8 reativa&ccedil;&otilde;es da campanha de 3 meses. Padr&atilde;o: Poodles voltam mais r&aacute;pido que Yorkshires.</div>
         <div class="meeting-msg"><span class="meeting-msg-from" style="color: var(--gold);">Supervisor &rarr; Todos:</span> Ter&ccedil;a tem 15% mais faltas. Sugerir lembrete extra 4h antes nos agendamentos de ter&ccedil;a.</div>
         <div class="meeting-msg"><span class="meeting-msg-from" style="color: #4ADE80;">Beto &rarr; Mel:</span> Tutora Ana tem 3 pets e vem todo m&ecirc;s. Cliente VIP &mdash; oferecer pacote fam&iacute;lia.</div>
@@ -665,13 +665,26 @@ body::after {
     <h2 class="section-title">Pronto pra cuidar dos pets<br>sem ficar preso <span class="gold">no celular?</span></h2>
     <div class="cta-buttons">
       <a href="https://aurelius.ia.br/?view=trial" class="btn-primary" style="padding: 18px 40px; font-size: 1.1rem;">Come&ccedil;ar agora &mdash; 7 dias gr&aacute;tis &rarr;</a>
-      <a href="https://wa.me/5541984520339" class="btn-secondary">Falar com consultor</a>
+      <a href="#" onclick="AureliusWidget.open(); return false;" class="btn-secondary">Falar com consultor</a>
     </div>
     <p class="cta-note">Sem cart&atilde;o de cr&eacute;dito. Setup em 5 minutos. Cancele quando quiser.</p>
   </div>
 </section>
 
 <footer class="footer">&copy; 2026 Aurelius IA &middot; aurelius.ia.br</footer>
+
+
+<!-- HERMES WIDGET (qualifica lead antes de abrir WhatsApp) -->
+<script src="https://hermes.aurelius.ia.br/widget.js"
+        data-tenant="aurelius"
+        data-campaign="caso-pet"
+        data-wa="5541984520339"
+        data-color="#f59e0b"
+        data-bot-name="Consultor Aurelius"
+        data-question="Qual seu principal desafio no WhatsApp da empresa?"
+        data-options="Leads perdidos,Atendimento 24/7,Qualificar antes de vender,Organizar conversas,Outro"
+        data-api="https://hermes.aurelius.ia.br/api/leads"
+        data-api-key="ak_live_P_1nILj84SjSmCRBayGDN4Xeexr7C7du"></script>
 
 </body>
 </html>

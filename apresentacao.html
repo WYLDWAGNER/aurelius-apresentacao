@@ -384,7 +384,7 @@ body::after{content:'';position:fixed;inset:0;opacity:.012;pointer-events:none;z
     <h2>Pronto pra ter uma <span class="gold">equipe digital?</span></h2>
     <div class="fcta-btns">
       <a href="https://aurelius.ia.br/?view=trial" class="btn btn-gold" style="padding:16px 36px;font-size:1rem;">Começar agora — 7 dias grátis →</a>
-      <a href="https://wa.me/5541984520339" class="btn btn-outline">Falar com consultor</a>
+      <a href="#" onclick="AureliusWidget.open(); return false;" class="btn btn-outline">Falar com consultor</a>
     </div>
     <p class="fcta-note">Sem cartão de crédito. Setup em 5 minutos. Cancele quando quiser.</p>
   </div>
@@ -439,6 +439,18 @@ document.addEventListener('keydown',function(e){if(e.key==='Escape')closeLB()});
 <style>.gcard:hover{transform:translateY(-4px)!important;border-color:var(--gold)!important;box-shadow:0 8px 32px rgba(245,158,11,.15)!important}</style>
 
 <footer class="footer">© 2026 Aurelius IA · aurelius.ia.br</footer>
+
+<!-- HERMES WIDGET (qualifica lead antes de abrir WhatsApp) -->
+<script src="https://hermes.aurelius.ia.br/widget.js"
+        data-tenant="aurelius"
+        data-campaign="apresentacao-jarvis"
+        data-wa="5541984520339"
+        data-color="#f59e0b"
+        data-bot-name="Consultor Aurelius"
+        data-question="Qual seu principal desafio no WhatsApp da empresa?"
+        data-options="Leads perdidos,Atendimento 24/7,Qualificar antes de vender,Organizar conversas,Outro"
+        data-api="https://hermes.aurelius.ia.br/api/leads"
+        data-api-key="ak_live_P_1nILj84SjSmCRBayGDN4Xeexr7C7du"></script>
 
 </body>
 </html>
